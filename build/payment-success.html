@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Success - Pakistan Medico International</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .payment-result-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        .payment-result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 40px;
+        }
+        .payment-result-card h1 {
+            color: #1A76D1;
+            margin-bottom: 10px;
+        }
+        .payment-result-card p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .payment-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .payment-details-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .payment-details-row:last-child {
+            border-bottom: none;
+        }
+        .payment-details-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .payment-details-value {
+            color: #666;
+        }
+        .btn-home {
+            background: #1A76D1;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .btn-home:hover {
+            background: #1565c0;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-result-container">
+        <div class="payment-result-card">
+            <div class="success-icon">
+                <i class="fa fa-check"></i>
+            </div>
+            <h1>Payment Successful!</h1>
+            <p>Thank you for your generous donation to Pakistan Medico International. Your payment has been processed successfully.</p>
+            
+            <div class="payment-details" id="paymentDetails">
+                <div class="payment-details-row">
+                    <span class="payment-details-label">Order ID:</span>
+                    <span class="payment-details-value" id="orderId">-</span>
+                </div>
+                <div class="payment-details-row">
+                    <span class="payment-details-label">Amount:</span>
+                    <span class="payment-details-value" id="amount">-</span>
+                </div>
+                <div class="payment-details-row">
+                    <span class="payment-details-label">Fund:</span>
+                    <span class="payment-details-value" id="fund">-</span>
+                </div>
+            </div>
+            
+            <p style="font-size: 14px; color: #999; margin-top: 20px;">
+                A confirmation email has been sent to your registered email address.
+            </p>
+            
+            <a href="index.html" class="btn-home">Return to Home</a>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/meezan-bank-api.js"></script>
+    <script>
+        // Verify payment status when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId') || sessionStorage.getItem('meezanOrderId');
+            const orderNumber = urlParams.get('orderNumber') || sessionStorage.getItem('meezanOrderNumber');
+            
+            // Display stored info
+            if (sessionStorage.getItem('meezanOrderId')) {
+                document.getElementById('orderId').textContent = sessionStorage.getItem('meezanOrderId');
+                document.getElementById('amount').textContent = 'PKR ' + parseFloat(sessionStorage.getItem('meezanAmount') || 0).toLocaleString();
+                document.getElementById('fund').textContent = sessionStorage.getItem('meezanFund') || 'Donation';
+            }
+            
+            // Verify payment with Meezan Bank
+            if (orderId) {
+                const meezanAPI = new MeezanBankAPI({
+                    apiUrl: 'https://acquiring.meezanbank.com/payment/rest/',
+                    username: 'PAKISTANMEDICO_api',
+                    password: 'P987658'
+                });
+                
+                const verification = await meezanAPI.getOrderStatus(orderId, orderNumber);
+                
+                if (verification.success) {
+                    // Payment verified successfully
+                    console.log('Payment verified:', verification);
+                } else {
+                    console.warn('Payment verification issue:', verification);
+                }
+            }
+            
+            // Clear session storage
+            sessionStorage.removeItem('meezanOrderId');
+            sessionStorage.removeItem('meezanOrderNumber');
+            sessionStorage.removeItem('meezanAmount');
+            sessionStorage.removeItem('meezanFund');
+        });
+    </script>
+</body>
+</html>
+

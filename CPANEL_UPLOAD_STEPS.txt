@@ -1,0 +1,145 @@
+═══════════════════════════════════════════════════════════════
+  STEP-BY-STEP: Deploy to cPanel File Manager
+═══════════════════════════════════════════════════════════════
+
+📍 YOU ARE HERE: /home/pmioffic
+🎯 GOAL: Upload files to public_html/
+
+═══════════════════════════════════════════════════════════════
+  METHOD 1: Upload ZIP File (EASIEST - RECOMMENDED)
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Prepare ZIP File on Your Computer
+───────────────────────────────────────────────────────────────
+1. On your computer, go to: C:\xampp\htdocs\mediplus-lite\
+2. Select ALL these files and folders:
+   ✅ index.html
+   ✅ payment-success.html
+   ✅ payment-fail.html
+   ✅ All other .html files
+   ✅ style.css
+   ✅ css/ folder
+   ✅ js/ folder
+   ✅ img/ folder
+   ✅ fonts/ folder
+   ✅ api/ folder
+   ✅ mail/ folder
+   ✅ assets/ folder (if exists)
+
+3. Right-click → "Send to" → "Compressed (zipped) folder"
+4. Name it: mediplus-lite.zip
+
+STEP 2: Upload ZIP to cPanel
+───────────────────────────────────────────────────────────────
+1. In cPanel File Manager (where you are now):
+   - Click on "public_html" folder (double-click to open it)
+
+2. Click "↑ Upload" button (top menu bar)
+
+3. Click "Select File" or drag and drop your mediplus-lite.zip
+
+4. Wait for upload to complete (100%)
+
+5. Click "Go Back" or navigate back to public_html/
+
+STEP 3: Extract ZIP File
+───────────────────────────────────────────────────────────────
+1. In public_html/ folder, find mediplus-lite.zip
+
+2. Right-click on mediplus-lite.zip
+
+3. Click "Extract"
+
+4. Choose extraction location: public_html/ (current folder)
+
+5. Click "Extract File(s)"
+
+6. Wait for extraction to complete
+
+STEP 4: Delete ZIP File
+───────────────────────────────────────────────────────────────
+1. Right-click on mediplus-lite.zip
+
+2. Click "Delete" or "X Delete"
+
+3. Confirm deletion
+
+STEP 5: Set File Permissions
+───────────────────────────────────────────────────────────────
+1. Right-click on each FOLDER (css, js, img, fonts, api, mail):
+   - Click "Permissions" or "Change Permissions"
+   - Set to: 755
+   - Check: rwxr-xr-x
+   - Click "Change Permissions"
+
+2. Right-click on PHP files (in api/ and mail/ folders):
+   - Click "Permissions"
+   - Set to: 644
+   - Check: rw-r--r--
+   - Click "Change Permissions"
+
+STEP 6: Verify Upload
+───────────────────────────────────────────────────────────────
+In public_html/ folder, you should see:
+✅ index.html
+✅ payment-success.html
+✅ payment-fail.html
+✅ style.css
+✅ css/ folder
+✅ js/ folder
+✅ img/ folder
+✅ fonts/ folder
+✅ api/ folder
+✅ mail/ folder
+
+═══════════════════════════════════════════════════════════════
+  METHOD 2: Upload Files Individually (If ZIP doesn't work)
+═══════════════════════════════════════════════════════════════
+
+STEP 1: Open public_html/
+───────────────────────────────────────────────────────────────
+1. Double-click "public_html" folder in left pane or right pane
+
+STEP 2: Upload Files
+───────────────────────────────────────────────────────────────
+1. Click "↑ Upload" button
+
+2. Upload files one by one or in batches:
+   - First: Upload all .html files
+   - Then: Upload style.css
+   - Then: Upload each folder (css, js, img, fonts, api, mail)
+
+3. For folders:
+   - Create folder first: Click "+ Folder" → Name it (e.g., "css")
+   - Open the folder
+   - Upload files inside that folder
+
+STEP 3: Set Permissions (Same as Method 1, Step 5)
+
+═══════════════════════════════════════════════════════════════
+  ✅ FINAL CHECKLIST
+═══════════════════════════════════════════════════════════════
+
+After deployment, verify:
+
+[ ] All files uploaded to public_html/
+[ ] index.html is in public_html/ root
+[ ] Folders have permission 755
+[ ] PHP files have permission 644
+[ ] Website loads at: https://yourdomain.com/
+[ ] Payment gateway tested
+
+═══════════════════════════════════════════════════════════════
+  🎯 QUICK SUMMARY
+═══════════════════════════════════════════════════════════════
+
+1. Open public_html/ folder
+2. Click "Upload" button
+3. Upload mediplus-lite.zip
+4. Right-click ZIP → Extract
+5. Delete ZIP file
+6. Set permissions (folders: 755, files: 644)
+7. Test website!
+
+═══════════════════════════════════════════════════════════════
+

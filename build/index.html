@@ -1,0 +1,2533 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="Site keywords here">
+    <meta name="description" content="">
+    <meta name='copyright' content=''>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>Pakistan Medico International</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/favicon.png">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Nice Select CSS -->
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- icofont CSS -->
+    <link rel="stylesheet" href="css/icofont.css">
+    <!-- Slicknav -->
+    <link rel="stylesheet" href="css/slicknav.min.css">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="css/owl-carousel.css">
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="css/datepicker.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="css/animate.min.css">
+    <!-- Magnific Popup CSS -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <!-- Medipro CSS -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+
+    <style>
+        .donation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            padding: 20px 20px 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .donation-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 28px 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #838383;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .donation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-icon {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .donation-card h2 {
+            margin: 0 0 12px 0;
+            color: #1A76D1;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .donation-card p {
+            color: #000000;
+            line-height: 1.3em;
+            margin: 0 0 24px 0;
+            flex-grow: 1;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .card-button {
+            display: inline-block;
+            background: #1A76D1;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: background 0.3s ease;
+            border: 1px solid #d0ddee;
+        }
+
+
+        .card-button:hover {
+            background: #ac0202;
+        }
+
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1a5f7a;
+            margin-bottom: 10px;
+            font-size: 2.8rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #555;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+            display: block !important;
+            margin: auto;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            background: #1A76D1;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-title i {
+            font-size: 1.6rem;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-body {
+            padding: 30px;
+            text-align: left;
+        }
+
+        .bank-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+
+        .bank-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .bank-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .bank-logo-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: #1A76D1;
+            border-radius: 50%;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 4px 10px rgba(26, 95, 122, 0.3);
+            flex-shrink: 0;
+        }
+
+        .bank-header-text h2 {
+            color: #1A76D1;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .bank-header-text p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .bank-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .bank-item {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #1A76D1;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .bank-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .bank-label {
+            font-weight: 600;
+            color: #1A76D1;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bank-label i {
+            font-size: 1.1rem;
+        }
+
+        .bank-value {
+            font-size: 1.1rem;
+            color: #333;
+            word-break: break-all;
+            line-height: 1.4;
+        }
+
+        .bank-value.iban,
+        .bank-value.swift {
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .account-title {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #1A76D1;
+        }
+
+        .account-title h3 {
+            color: #1A76D1;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .account-title p {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .currency-accounts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .currency-account {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            border: 1px solid #d1e7ff;
+        }
+
+        .currency-label {
+            font-weight: 600;
+            color: #1A76D1;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .currency-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .instructions {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #555;
+            border-left: 4px solid #1A76D1;
+        }
+
+        .instructions p {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #1A76D1;
+            border-bottom: 3px solid #1A76D1;
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: #1A76D1;
+            background-color: #f8f9fa;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .bank-details {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-header {
+                padding: 15px 20px;
+            }
+
+            .bank-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                text-align: left;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .tab-btn.active {
+                border-bottom: 3px solid #1a5f7a;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .card-button {
+                padding: 14px 28px;
+                font-size: 1.1rem;
+            }
+
+            .modal {
+                width: 95%;
+            }
+
+            .currency-accounts {
+                flex-direction: column;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .donation-grid {
+                grid-template-columns: 1fr;
+                padding: 16px;
+                gap: 20px;
+            }
+        }
+
+        /* Payment Form Styles */
+        .payment-modal {
+            max-width: 600px;
+        }
+
+        .payment-form-body {
+            padding: 30px;
+        }
+
+        .payment-form {
+            width: 100%;
+        }
+
+        .form-section {
+            margin-bottom: 32px;
+        }
+
+        .form-section:last-of-type {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-group-half {
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #333;
+            background-color: #f8f8f8;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1A76D1;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(26, 118, 209, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 8px;
+            margin-left: 12px;
+            align-items: center;
+        }
+
+        .payment-icon {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 6px;
+            border-radius: 4px;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .payment-icon.mastercard {
+            background: linear-gradient(135deg, #eb001b, #f79e1b);
+        }
+
+        .payment-icon.visa {
+            background: #1434cb;
+        }
+
+        .payment-icon.amex {
+            background: #006fcf;
+        }
+
+        .payment-icon.unionpay {
+            background: #e21836;
+        }
+
+        .security-code-icon {
+            position: absolute;
+            right: 12px;
+            font-size: 0.75rem;
+            color: #666;
+            font-weight: 500;
+            cursor: help;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .form-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 40px;
+            cursor: pointer;
+            background-color: #f8f8f8;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .submit-btn {
+            flex: 1;
+            padding: 14px 24px;
+            background-color: #1A76D1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #1565c0;
+        }
+
+        .cancel-btn {
+            padding: 14px 24px;
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #d0d0d0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background-color: #e8e8e8;
+            border-color: #b0b0b0;
+        }
+
+        @media (max-width: 768px) {
+            .payment-form-body {
+                padding: 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .form-group-half {
+                margin-bottom: 20px;
+            }
+
+            .payment-icons {
+                margin-left: 0;
+                margin-top: 8px;
+                justify-content: flex-start;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .submit-btn,
+            .cancel-btn {
+                width: 100%;
+            }
+        }
+
+        /* Professional Checkout Modal Styles */
+        .checkout-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .checkout-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .checkout-modal-container {
+            width: 100%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: auto;
+        }
+
+        .checkout-modal {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: row;
+            min-height: 600px;
+        }
+
+        /* Left Side - Donation Details */
+        .checkout-left {
+            background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
+            color: #ffffff;
+            padding: 40px;
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .checkout-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: #ffffff;
+        }
+
+        .checkout-header p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .donation-summary-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 10px 0;
+        }
+
+        .summary-fund {
+            font-size: 16px;
+            color: #4caf50;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .security-info-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .security-icon {
+            font-size: 32px;
+            color: #4caf50;
+        }
+
+        .security-content {
+            flex: 1;
+        }
+
+        .security-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .security-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+        }
+
+        /* Right Side - Billing Form */
+        .checkout-right {
+            width: 60%;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+        }
+
+        .checkout-form-header {
+            padding: 30px 40px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .checkout-form-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1A76D1;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checkout-close-btn {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .checkout-close-btn:hover {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .checkout-form {
+            padding: 30px 40px 40px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .checkout-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .checkout-form .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .checkout-form .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .checkout-form .form-control:focus {
+            outline: none;
+            border-color: #1A76D1;
+            box-shadow: 0 0 0 3px rgba(26, 118, 209, 0.1);
+        }
+
+        .checkout-form .form-control.error {
+            border-color: #f44336;
+        }
+
+        .checkout-form .form-control.error:focus {
+            border-color: #f44336;
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
+        }
+
+        .checkout-form .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .checkout-form .form-group-half {
+            flex: 1;
+        }
+
+        .checkout-form textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .field-error {
+            color: #f44336;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .form-actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-submit {
+            flex: 1;
+            padding: 14px 24px;
+            background: #1A76D1;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #1565c0;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(26, 118, 209, 0.3);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-cancel {
+            padding: 14px 24px;
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background: #e8e8e8;
+            border-color: #b0b0b0;
+        }
+
+        .checkout-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .checkout-message.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef5350;
+        }
+
+        .checkout-message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+
+        .checkout-message.info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #2196f3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .checkout-modal {
+                flex-direction: column;
+                max-height: 90vh;
+            }
+
+            .checkout-left {
+                width: 100%;
+                padding: 30px;
+            }
+
+            .checkout-right {
+                width: 100%;
+            }
+
+            .checkout-form-header,
+            .checkout-form {
+                padding: 20px 30px;
+            }
+
+            .checkout-form .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .checkout-modal-container {
+                padding: 10px;
+            }
+
+            .checkout-left {
+                padding: 20px;
+            }
+
+            .checkout-header h2 {
+                font-size: 24px;
+            }
+
+            .summary-amount {
+                font-size: 36px;
+            }
+
+            .checkout-form-header,
+            .checkout-form {
+                padding: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn-submit,
+            .btn-cancel {
+                width: 100%;
+            }
+        }
+
+        /* Donation Amount Buttons */
+        .donation-amount-buttons {
+            margin-bottom: 15px;
+        }
+
+        .amount-btn {
+            padding: 14px 20px;
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .amount-btn:hover {
+            background: #e8f4fc;
+            border-color: #1A76D1;
+            color: #1A76D1;
+            transform: translateY(-2px);
+        }
+
+        .amount-btn.active {
+            background: #1A76D1;
+            border-color: #1A76D1;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(26, 118, 209, 0.3);
+        }
+
+        #customAmount {
+            margin-top: 0;
+        }
+
+        @media (max-width: 576px) {
+            .donation-amount-buttons {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader-outter"></div>
+            <div class="loader-inner"></div>
+
+            <div class="indicator">
+                <svg width="16px" height="12px">
+                    <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                    <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <!-- End Preloader -->
+
+    <!-- Header Area -->
+    <header class="header">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-5 col-12">
+                        <!-- Contact -->
+
+                        <!-- End Contact -->
+                    </div>
+                    <div class="col-lg-6 col-md-7 col-12">
+                        <!-- Top Contact -->
+                        <ul class="top-contact">
+                            <li><i class="fa fa-phone"></i>+923332107502</li>
+                            <li><i class="fa fa-envelope"></i><a
+                                    href="mailto:support@yourmail.com">M.Iqbal@pmiofficial.com</a></li>
+                        </ul>
+                        <!-- End Top Contact -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Topbar -->
+        <!-- Header Inner -->
+        <div class="header-inner">
+            <div class="container">
+                <div class="inner">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-12">
+                            <!-- Start Logo -->
+                            <div class="logo">
+                                <a href="index.html"><img src="img/logo.png" alt="#"></a>
+                            </div>
+                            <!-- End Logo -->
+                            <!-- Mobile Nav -->
+                            <div class="mobile-nav"></div>
+                            <!-- End Mobile Nav -->
+                        </div>
+                        <div class="col-lg-7 col-md-9 col-12">
+                            <!-- Main Menu -->
+                            <div class="main-menu">
+                                <nav class="navigation">
+                                    <ul class="nav menu">
+                                        <li class="active"><a href="index.html">Home</li></a>
+                                        <li><a href="Gallary.html">Gallary </a></li>
+                                        <li><a href="#">Services <i class="icofont-rounded-down"></i></a>
+                                            <ul class="dropdown">
+                                                <li><a href="aims.html">Aims & Object</a></li>
+                                                <li><a href="earthquake.html">Earthquake</a></li>
+                                                <li><a href="Flooding.html">Flooding</a></li>
+                                                <li><a href="Finicial Help.html">Finicial Help</a></li>
+                                                <li><a href="Old Age Home.html">Old Age Home</a></li>
+                                                <li><a href="Futher Planning.html">Futher Planning</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="Projects.html">Project </i></a>
+                                        </li>
+                                        <li><a href="About Us.html">About Us</a>
+                                        </li>
+                                        <li><a href="contact.html">Contact Us</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!--/ End Main Menu -->
+                        </div>
+                        <div class="col-lg-2 col-12">
+                            <div class="get-quote">
+                                <a href="#" class="btn" id="donateNowBtn">Donate Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Header Inner -->
+    </header>
+    <!-- End Header Area -->
+
+    <!-- Slider Area -->
+    <section class="slider">
+        <div class="hero-slider">
+            <!-- Start Single Slider -->
+            <div class="single-slider" style="background-image:url('img/ather-1.jpeg')">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <!-- <div class="text">
+								<h1>PMI Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
+								<p>Pakistan Medico Health Centre, Orangi Township, Karachi was conceived by us more or
+									less at the time of
+									the foundation of our organization. However we conducted a health survey of 2020.
+									Subsequently, a
+									8
+
+									questionnaire was designed to survey the health pattern knowledge of adults and
+									children. Thus the Health
+									Centre was designed accordingly. Orangi Township has a population of 2500,000. This
+									was the only proper
+									health centre in the area. This Township is spread over roughly on 42 sqr miles. The
+									Health Centre today
+									consists of curative, preventive, educational and general advisory services. </p>
+								<div class="button">
+
+									<a href="#" class="btn primary">Learn More</a>
+								</div>
+							</div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Single Slider -->
+            <!-- Start Single Slider -->
+            <div class="single-slider" style="background-image:url('img/ather-2.jpeg')">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <!-- <div class="text">
+								<h1>PMI Provide <span>Education</span> Services That You Can <span>Trust!</span></h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl
+									pellentesque, faucibus libero eu, gravida quam. </p>
+								<div class="button">
+
+									<a href="#" class="btn primary">Learn More</a>
+								</div>
+							</div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Start End Slider -->
+            <!-- Start Single Slider -->
+            <div class="single-slider" style="background-image:url('img/ather-3.jpeg')">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <!-- <div class="text">
+								<h1>PMI Provide <span>Old Age Home</span> Services That You Can <span>Trust!</span></h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl
+									pellentesque, faucibus libero eu, gravida quam. </p>
+								<div class="button">
+
+									<a href="#" class="btn primary">Learn More</a>
+								</div>
+							</div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 4th slider -->
+
+            <div class="single-slider" style="background-image:url('img/ather-4.jpeg')">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="text">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Single Slider -->
+        </div>
+    </section>
+    <!--/ End Slider Area -->
+
+    <!-- Start Schedule Area -->
+
+    <section class="schedule">
+        <div class="container">
+            <div class="schedule-inner">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-12 ">
+                        <!-- single-schedule -->
+                        <div class="single-schedule first">
+                            <div class="inner">
+                                <div class="icon">
+                                    <i class="fa fa-ambulance"></i>
+                                </div>
+                                <div class="single-content">
+                                    <h4>MEDICO HEALTH CENTRE, ORANGI TOWNSHIP, KARACHI </h4>
+                                    <p>Pakistan Medico Health Centre, Orangi Township, Karachi was conceived by us more
+                                        or less at the time of
+                                        the foundation of our organization. However we conducted a health survey of
+                                        2020.</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- single-schedule -->
+                        <div class="single-schedule middle">
+                            <div class="inner">
+                                <div class="icon">
+                                    <i class="icofont-prescription"></i>
+                                </div>
+                                <div class="single-content">
+
+                                    <h4>MEDICO HIGH SCHOOL MAJEED COLONY, LANDHI,</h4>
+                                    <p>We founded a High School till Matriculation which has two shifts i.e. morning and
+                                        afternoon. It is a co
+                                        education with 45% being female students. It has over 1000 students. This School
+                                        is in two shifts with boys
+                                        & girls.</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-12">
+                        <!-- single-schedule -->
+                        <div class="single-schedule last">
+                            <div class="inner">
+                                <div class="icon">
+                                    <i class="icofont-ui-clock"></i>
+                                </div>
+                                <div class="single-content">
+                                    <h4>MEDICO PUBLIC LIBRARY ORANGI TOWN </h4>
+                                    <p>A public library is functioning in the Health Centre and is open to public from 1
+                                        P.M. (1300 hours) onwards. It has daily
+                                        and periodical Newspapers and magazines apart from the course books of the
+                                        students of the area.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--/End Start schedule Area -->
+
+
+    <!-- donation  -->
+
+    <div class="donation-grid">
+        <div class="donation-card">
+            <div class="card-icon">🏦</div>
+            <h2>Bank Transfer</h2>
+            <p>Deposit your donations directly via an online funds transfer or through any bank in Pakistan</p>
+            <a id="banklist" class="card-button">VIEW BANK LIST</a>
+        </div>
+
+        <div class="donation-card">
+            <div class="card-icon">💳</div>
+            <h2>Donate Online</h2>
+            <p>Click below to make donations directly with any Visa/MasterCard through the HBL Payment Gateway</p>
+            <a id="donateOnlineBtn" class="card-button">DONATE ONLINE</a>
+        </div>
+
+        <div class="donation-card">
+            <div class="card-icon">📍</div>
+            <h2>Collection Centers</h2>
+            <p>Visit our collection centers in Karachi, Lahore & Hyderabad. Find the nearest center now, at Collection
+                Centers</p>
+            <!-- <a href="#" class="card-button">FIND CENTERS</a> -->
+        </div>
+
+        <div class="donation-card">
+            <div class="card-icon">📱</div>
+            <h2>Donate Via SMS</h2>
+            <p>Type "DONATE" and send an SMS to 9880 (Charges: Rs. 20+ Tax)</p>
+            <!-- <a href="#" class="card-button">SEND SMS</a> -->
+        </div>
+
+        <div class="donation-card">
+            <div class="card-icon">📱</div>
+            <h2>Bank App</h2>
+            <p>Contribute to Indus Hospital & Health Network through your bank's mobile app</p>
+            <!-- <a href="#" class="card-button">USE BANK APP</a> -->
+        </div>
+
+        <div class="donation-card">
+            <div class="card-icon">🛒</div>
+            <h2>Daraz</h2>
+            <p>Visit the Daraz website to make an online contribution to Indus Hospital & Health Network</p>
+            <!-- <a href="#" class="card-button">VISIT DARAZ</a> -->
+        </div>
+
+        <div class="donation-card">
+            <div class="card-icon">🛒</div>
+            <h2>Door Step Collection</h2>
+            <p>Karachi: 021 111 111 880<br>
+                Lahore: 042 111 111 880<br>
+                UAN: 03 111 111 880<br>
+                Fill the Form for secure collections</p>
+            <!-- <a href="#" class="card-button">VISIT DARAZ</a> -->
+        </div>
+
+
+        <div class="donation-card">
+            <div class="card-icon">📱</div>
+            <h2>Mobile Wallet</h2>
+            <p>Use your JazzCash, EasyPaisa or UPaisa mobile accounts to contribute to Indus Hospital & Health Network
+            </p>
+            <!-- <a href="#" class="card-button">VISIT DARAZ</a> -->
+        </div>
+
+
+        <div class="donation-card">
+            <div class="card-icon">🛒</div>
+            <h2>Donation Box</h2>
+            <p>Obtain a Donation Box for IHHN to place at your retail outlet. Call us at<br>
+                Karachi: 021 111 111 880<br>
+                Lahore: 042 111 111 880<br>
+                UAN: 03 111 111 880 880<br>
+                for a Donation Box</p>
+            <!-- <a href="#" class="card-button">VISIT DARAZ</a> -->
+        </div>
+
+    </div>
+
+
+    <!-- bank list popup  -->
+
+    <!-- Modal for bank details -->
+
+
+    <div class="container">
+        <h1>Pakistan Medico International</h1>
+        <p class="subtitle">Social Welfare Association - Banking Information Portal</p>
+
+        <a id="banklist" class="card-button">
+            <i class="fas fa-university"></i> VIEW BANK LIST
+        </a>
+    </div>
+
+    <!-- Modal for bank details -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-university"></i> Bank Account Details
+                </div>
+                <button class="close-btn" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="meezan">Meezan Bank</button>
+                    <button class="tab-btn" data-tab="habib">Habib Metro Bank</button>
+                </div>
+
+                <!-- Meezan Bank Section -->
+                <div class="tab-content active" id="meezan-tab">
+                    <div class="bank-section">
+                        <div class="bank-header">
+                            <div class="bank-logo-circle">
+                                <i class="fas fa-landmark"></i>
+                            </div>
+                            <div class="bank-header-text">
+                                <h2>Meezan Bank Limited</h2>
+                                <p>Tooba Masjid Branch, Karachi</p>
+                            </div>
+                        </div>
+
+                        <div class="account-title">
+                            <h3>Account Title</h3>
+                            <p>PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION</p>
+                        </div>
+
+                        <div class="bank-details">
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-building"></i> Bank Name
+                                </div>
+                                <div class="bank-value">MEEZAN BANK LIMITED</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-code-branch"></i> Branch Code
+                                </div>
+                                <div class="bank-value">1020</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-map-marker-alt"></i> Branch Name
+                                </div>
+                                <div class="bank-value">TOOBA MASJID BRANCH</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-map-pin"></i> Branch Address
+                                </div>
+                                <div class="bank-value">PLOT NO 10-D, A COMMERCIAL MARKET DHA PHASE II KARACHI</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-id-card"></i> Account No
+                                </div>
+                                <div class="bank-value">1020-0113583984</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-credit-card"></i> IBAN
+                                </div>
+                                <div class="bank-value iban">PK06MEZN0010200113583984</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-globe"></i> SWIFT CODE
+                                </div>
+                                <div class="bank-value swift">MEZNPKKAGRD</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Habib Metro Bank Section -->
+                <div class="tab-content" id="habib-tab">
+                    <div class="bank-section">
+                        <div class="bank-header">
+                            <div class="bank-logo-circle"
+                                style="background: linear-gradient(135deg, #8b0000, #b22222);">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="bank-header-text">
+                                <h2>Habib Metro Ltd.</h2>
+                                <p>HBZ Plaza Branch, I.I Chandrigar Road</p>
+                            </div>
+                        </div>
+
+                        <div class="account-title">
+                            <h3>Account Title</h3>
+                            <p>PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION</p>
+                        </div>
+
+                        <div class="bank-details">
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-building"></i> Bank Name
+                                </div>
+                                <div class="bank-value">HABIB METRO LTD.</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-map-marker-alt"></i> Branch Name
+                                </div>
+                                <div class="bank-value">HBZ PLAZA BRANCH</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-map-pin"></i> Branch Address
+                                </div>
+                                <div class="bank-value">I.I CHANDRIGAR ROAD</div>
+                            </div>
+
+                            <div class="currency-accounts">
+                                <div class="currency-account">
+                                    <div class="currency-label">
+                                        <i class="fas fa-rupee-sign"></i> PKR Account No
+                                    </div>
+                                    <div class="currency-value">152,0271–4037–0551</div>
+                                </div>
+
+                                <div class="currency-account">
+                                    <div class="currency-label">
+                                        <i class="fas fa-dollar-sign"></i> US Dollar Account No
+                                    </div>
+                                    <div class="currency-value">0152–2333–3037–0551</div>
+                                </div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-credit-card"></i> IBAN
+                                </div>
+                                <div class="bank-value iban">PK34 MPBL 0152–2333–3037–0551</div>
+                            </div>
+
+                            <div class="bank-item">
+                                <div class="bank-label">
+                                    <i class="fas fa-globe"></i> SWIFT CODE
+                                </div>
+                                <div class="bank-value swift">MPBL PKKA052</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <p><i class="fas fa-info-circle"></i> <strong>Note:</strong> Use these details for bank transfers
+                        and donations.</p>
+                    <p><i class="fas fa-hand-holding-usd"></i> Please verify the account details before making any
+                        transaction.</p>
+                    <p><i class="fas fa-exchange-alt"></i> Switch between bank accounts using the tabs above.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Checkout Modal -->
+    <div class="checkout-modal-overlay" id="checkoutModalOverlay">
+        <div class="checkout-modal-container">
+            <div class="checkout-modal">
+                <!-- Left Side - Donation Details -->
+                <div class="checkout-left">
+                    <div class="checkout-header">
+                        <h2>Secure Payment</h2>
+                        <p>Complete your donation to Pakistan Medico International</p>
+                    </div>
+
+                    <div class="donation-summary-box">
+                        <div class="summary-label">Your Donation Amount</div>
+                        <div class="summary-amount" id="donationAmountDisplay">Select Amount</div>
+                        <div class="summary-fund" id="donationFundDisplay">Funds clean water access</div>
+                    </div>
+
+                    <div class="security-info-box">
+                        <div class="security-icon">
+                            <i class="fa fa-shield" aria-hidden="true"></i>
+                        </div>
+                        <div class="security-content">
+                            <div class="security-title">100% Secure Payment</div>
+                            <div class="security-text">Your information is protected with 256-bit SSL encryption</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side - Billing Form -->
+                <div class="checkout-right">
+                    <div class="checkout-form-header">
+                        <h3>BILLING ADDRESS</h3>
+                        <button type="button" class="checkout-close-btn" id="checkoutCloseBtn">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+
+                    <form id="checkoutForm" class="checkout-form">
+                        <!-- Donation Amount Selection -->
+                        <div class="form-group">
+                            <label class="form-label">Select Donation Amount *</label>
+                            <div class="donation-amount-buttons"
+                                style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 12px;">
+                                <button type="button" class="amount-btn" data-amount="1000">PKR 1,000</button>
+                                <button type="button" class="amount-btn" data-amount="5000">PKR 5,000</button>
+                                <button type="button" class="amount-btn" data-amount="10000">PKR 10,000</button>
+                                <button type="button" class="amount-btn" data-amount="20000">PKR 20,000</button>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="number" id="customAmount" name="customAmount" class="form-control"
+                                    placeholder="Or enter custom amount" min="1" step="1" style="flex: 1;">
+                                <span style="color: #666; font-size: 14px;">PKR</span>
+                            </div>
+                            <input type="hidden" id="donationAmount" name="donationAmount" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" class="form-control"
+                                placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-control"
+                                placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group form-group-half">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" class="form-control"
+                                    placeholder="Enter your phone" required>
+                            </div>
+                            <div class="form-group form-group-half">
+                                <label for="country" class="form-label">Country</label>
+                                <select id="country" name="country" class="form-control">
+                                    <option value="PK">Pakistan</option>
+                                    <option value="US">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="AE">United Arab Emirates</option>
+                                    <option value="SA">Saudi Arabia</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address" class="form-label">Address *</label>
+                            <textarea id="address" name="address" class="form-control" rows="3"
+                                placeholder="Room - Street - Locality" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="payment-note"
+                                style="background: #e3f2fd; border: 1px solid #2196f3; border-radius: 8px; padding: 15px; margin: 20px 0; display: flex; align-items: center; gap: 10px;">
+                                <i class="fa fa-lock" style="color: #2196f3; font-size: 20px;"></i>
+                                <span style="color: #1565c0; font-size: 14px; line-height: 1.5;">
+                                    <strong>Secure Payment:</strong> You will be redirected to Meezan Bank's secure
+                                    payment page to enter your card details and complete the transaction.
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-submit" id="checkoutSubmitBtn">Complete Payment</button>
+                            <button type="button" class="btn-cancel" id="checkoutCancelBtn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Form Modal -->
+    <div class="modal-overlay" id="paymentModalOverlay">
+        <div class="modal payment-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fa fa-credit-card"></i> Donate Online
+                </div>
+                <button class="close-btn" id="closePaymentModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="modal-body payment-form-body">
+                <form id="paymentForm" class="payment-form">
+                    <!-- Payment Method Section -->
+                    <div class="form-section">
+                        <h3 class="section-title">Payment method</h3>
+
+                        <div class="form-group">
+                            <label for="cardNumber" class="form-label">Card number</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="cardNumber" name="cardNumber" class="form-input"
+                                    placeholder="Card number" maxlength="19">
+                                <div class="payment-icons">
+                                    <span class="payment-icon mastercard" title="Mastercard">MC</span>
+                                    <span class="payment-icon visa" title="Visa">V</span>
+                                    <span class="payment-icon amex" title="American Express">AMEX</span>
+                                    <span class="payment-icon unionpay" title="UnionPay">UnionPay</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group form-group-half">
+                                <label for="expirationDate" class="form-label">Expiration date</label>
+                                <input type="text" id="expirationDate" name="expirationDate" class="form-input"
+                                    placeholder="MM/YY" maxlength="5">
+                            </div>
+
+                            <div class="form-group form-group-half">
+                                <label for="securityCode" class="form-label">Security code</label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="securityCode" name="securityCode" class="form-input"
+                                        placeholder="Security code" maxlength="4">
+                                    <span class="security-code-icon"
+                                        title="3-digit code on the back of your card">123</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Address Section -->
+                    <div class="form-section">
+                        <h3 class="section-title">Billing address</h3>
+
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">Full name</label>
+                            <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addressLine1" class="form-label">Address line 1</label>
+                            <input type="text" id="addressLine1" name="addressLine1" class="form-input"
+                                placeholder="Address line 1">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">Complete Payment</button>
+                        <button type="button" class="cancel-btn" id="cancelPayment">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Feautes -->
+
+    <section class="Feautes section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-35">
+                    <div class="section-title">
+                        <h2>PMI Are Always Ready to Help You & Your Family</h2>
+                        <!-- <img src="img/section-img.png" alt="#"> -->
+                        <p>Pakistan Medico International Social Welfare Association is purely a Pakistani Organization,
+                            founded on
+                            18th May, 1971, by few like minded people of Pakistan. It was originally registered under
+                            Societies Act of
+                            XXI of 1860. On 30th April, 1979, it was then registered with the Directorate of Social
+                            Welfare, Government
+                            of Sind. It has been recognized by the Central Board of Revenue, Government of Pakistan,
+                            Under 47 Income
+                            Tax Act, as a charitable institution. It is known to various government agencies, such as
+                            Ministry of Health,
+                            Directorate of Social Welfare, Government of Sind, The Cabinet Division, Government of
+                            Pakistan and
+                            Administration of Karachi City apart from various relevant Departments of Central and
+                            Provincial
+                            Governments. </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Start Why choose -->
+            <section class="why-choose section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-title">
+                                <h2>Pakistan Medical International</h2>
+                                <h2>Social Welfare Association</h2>
+                                <h3>Reg No. dsw / (S) 274 of 1979 Approved by CBR U / S 2 (36)(C)</h3>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <!-- Start Choose Left -->
+                            <div class="choose-left">
+                                <h3>AIMS AND OBJECTS </h3>
+                                <p>a) To help the citizens of Pakistan to uplift their social and economic standard.
+                                    b) To find out ways and means to improve the health of poor and needy people of
+                                    Pakistan.
+                                    c) To create sense of social welfare responsibilities amongst the intelligentsia.
+                                    d) To open or assist in opening charitable educational institutions such as Primary
+                                    lower
+                                    secondary/Technical schools and colleges for the poor people to provide education
+                                    and wipe out illiteracy
+                                    from the country.
+                                    e) To open small projects like opening industrial homes, polytechnic institutions
+                                    etc. for training people in
+                                    different vocations and providing employment.
+                                    f) To open charitable hospital for the poor people of the country.
+                                    g) To help and assist government authorities or other recognized private
+                                    institutions under 47-C.I.T. ACT by
+                                    donating medicines, medical goods and equipments, cash or any other essential items.
+                                    h) To run non-profit institutions like hospitals health centres and charge nominal
+                                    fee to cover incidental
+                                    expenses.
+                                    i) To run and carry out all social, economic and medical relief work throughout
+                                    Pakistan and other countries
+                                    as well as during emergencies and national and natural catastrophies.
+                                    j) To accept donations in cash and kind both within the country and outside the
+                                    country after fulfilment of
+                                    legal formalities.
+                                    k) To raise and acquire loans to the extent of 10% of the annual budget of the
+                                    society for the previous
+                                    years.
+                                </p>
+                                <div class="row">
+
+                                </div>
+                            </div>
+                            <!-- End Choose Left -->
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <!-- Start Choose Rights -->
+                            <div class="choose-right">
+                                <div class="video-image">
+                                    <!-- Video Animation -->
+                                    <div class="promo-video">
+                                        <div class="waves-block">
+                                            <div class="waves wave-1"></div>
+                                            <div class="waves wave-2"></div>
+                                            <div class="waves wave-3"></div>
+                                        </div>
+                                    </div>
+                                    <!--/ End Video Animation -->
+                                    <a href="https://www.youtube.com/watch?v=So-SVwmRDKY"
+                                        class="video video-popup mfp-iframe"><i class="fa fa-play"></i></a>
+                                </div>
+                            </div>
+                            <!-- End Choose Rights -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Start portfolio -->
+            <section class="portfolio section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-25">
+                            <div class="section-title">
+                                <h2>ReHumaintarian Response to the 2005 Earthquake </h2>
+                                <img src="img/section-img.png" alt="#">
+                                <p>Background of the Disaster
+                                    • A powerful earthquake struck Northern Pakistan on October 8, 2005.
+                                    • Magnitude: 7.6
+                                    10
+
+                                    • Thousands lost their lives; many more were injured or displaced.
+                                    • Urgent need for medical and food support across devastated areas.
+                                    PMI's Immediate Response
+                                    • PMI mobilized doctors, paramedics, and volunteers within hours.
+                                    • Set up emergency medical camps in the hardest-hit regions.
+                                    • Provided first aid, trauma care, and emergency surgeries.
+                                    • Established temporary shelters and relief centers </p><a
+                                    href="portfolio-details.html" class="btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <div class="owl-carousel portfolio-slider">
+                                <div class="single-pf">
+                                    <img src="img/1st-card.png" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/2nd-card.png" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf7.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf8.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf5.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf6.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf7.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf8.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--/ End portfolio -->
+            <!--/ End Why choose -->
+            <!-- Start portfolio -->
+            <section class="portfolio section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-25">
+                            <div class="section-title">
+                                <h2>Flood Relief Efforts by PMI in Pakistan </h2>
+                                <img src="img/section-img.png" alt="#">
+                                <p>Background of the Disaster
+                                    • Torrential monsoon rains caused severe flooding across Pakistan.
+                                    • Major impact in Sindh, Balochistan, and South Punjab.
+                                    • Millions displaced; homes, crops, and infrastructure destroyed.
+                                    • Urgent need for shelter, clean water, food, and medical assistance.
+                                    PMI's Immediate Response
+                                    • PMI mobilized thousands of volunteers, doctors, and emergency staff.
+                                    • Established emergency response centers and medical camps.
+                                    • Provided rescue operations in submerged regions.
+                                    • Collaborated with local authorities and international organizations. </p><a
+                                    href="portfolio-details.html" class="btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <div class="owl-carousel portfolio-slider">
+                                <div class="single-pf">
+                                    <img src="img/1st-card.png" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/2nd-card.png" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf3.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf4.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/1st-card.png" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/2nd-card.png" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf3.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf4.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--/ End portfolio -->
+            <!--/ End Why choose -->
+            <!-- Start portfolio -->
+            <section class="portfolio section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-25">
+                            <div class="section-title">
+                                <h2>COVID-19 Relief Efforts by PMI in Pakistan </h2>
+                                <img src="img/section-img.png" alt="#">
+                                <p>Background of the Crisis</P>
+                                <P>• COVID-19 pandemic hit Pakistan in early 2020.
+                                    • Severe strain on the healthcare system, economy, and vulnerable communities.
+                                    • Urgent need for medical support, public awareness, and social assistance.</P>
+                                <P>
+                                    PMI’s Immediate Response</P>
+                                <P>• Launched nationwide awareness campaigns on prevention and safety.
+                                    • Set up emergency response units and helplines.
+                                    • Collaborated with NDMA, WHO, and local health departments.
+                                    • Mobilized volunteers for community outreach. </p><a href="portfolio-details.html"
+                                    class="btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <div class="owl-carousel portfolio-slider">
+                                <div class="single-pf">
+                                    <img src="img/1st-card.png" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/2nd-card.png" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf11.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf12.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf9.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf10.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf11.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                                <div class="single-pf">
+                                    <img src="img/pf12.jpg" alt="#">
+                                    <a href="portfolio-details.html" class="btn">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--/ End portfolio -->
+
+
+            <!-- Start Blog Area -->
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title">
+                            <h2>Keep up with Our Most Recent Medical News.</h2>
+                            <img src="img/section-img.png" alt="#">
+                            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit praesent aliquet. pretiumts</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Single Blog -->
+                        <div class="single-news">
+                            <div class="news-head">
+                                <img src="img/blog1.jpg" alt="#">
+                            </div>
+                            <div class="news-body">
+                                <div class="news-content">
+                                    <div class="date">22 Aug, 2020</div>
+                                    <h2><a href="blog-single.html">We have annnocuced our new product.</a></h2>
+                                    <p class="text">Lorem ipsum dolor a sit ameti, consectetur adipisicing elit, sed do
+                                        eiusmod tempor incididunt sed do incididunt sed.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Single Blog -->
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Single Blog -->
+                        <div class="single-news">
+                            <div class="news-head">
+                                <img src="img/blog2.jpg" alt="#">
+                            </div>
+                            <div class="news-body">
+                                <div class="news-content">
+                                    <div class="date">1970-1971</div>
+                                    <h2><a href="blog-single.html">Cetificate of Registration of Socities</a></h2>
+                                    <p class="text"> . It was originally registered under Societies Act of
+                                        XXI of 1860. On 30th April, 1979, it was then registered with the Directorate of
+                                        Social Welfare, Government
+                                        of Sind.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Single Blog -->
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Single Blog -->
+                        <div class="single-news">
+                            <div class="news-head">
+                                <img src="img/blog3.jpg" alt="#">
+                            </div>
+                            <div class="news-body">
+                                <div class="news-content">
+                                    <div class="date">18th May 1979</div>
+                                    <h2><a href="blog-single.html">Certificate of Registration</a></h2>
+                                    <p class="text"> It has been recognized by the Central Board of Revenue, Government
+                                        of Pakistan, Under 47 Income
+                                        Tax Act, as a charitable institution.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Single Blog -->
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- End Blog Area -->
+
+    <!-- Footer Area -->
+
+    <footer id="footer" class="footer ">
+        <!-- Footer Top -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-footer">
+                            <h2>About Us</h2>
+                            <p>Pakistan Medico International Social Welfare Association is purely a Pakistani
+                                Organization, founded on
+                                18th May, 1971, by few like minded people of Pakistan..</p>
+                            <!-- Social -->
+                            <ul class="social">
+                                <li><a href="https://www.facebook.com/share/19epZ4NNa1/"><i
+                                            class="icofont-facebook"></i></a></li>
+                                <li><a href="https://youtu.be/r94U8XPfOTI?si=olwrv1ORkS3HJrgS"><i
+                                            class="icofont-youtube"></i></a></li>
+
+                                <li><a
+                                        href="https://www.instagram.com/pakistan.medico.international?igsh=MWVhaDJkN3NzaDBydA=="><i
+                                            class="icofont-instagram"></i></a></li>
+                                <li><a href="#"><i class="icofont-pinterest"></i></a></li>
+                                <li><a href="https://x.com/PakMedicoInt?t=EhWj1vwg_w95ynDePSpeQg&s=09"><i
+                                            class="icofont-twitter"></i></a></li>
+                            </ul>
+                            <!-- End Social -->
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-footer f-link">
+                            <h2>Quick Links</h2>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <ul>
+                                        <li><a href="index.html"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>Home</a></li>
+                                        <li><a href="Gallary.html"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>Gallary</a></li>
+                                        <li><a href="Project.html"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>Project</a></li>
+                                        <li><a href="About us.html"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>About us</a></li>
+                                        <li><a href="Contact US.html"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>Contact US</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <ul>
+                                        <li><a href="aims.html"><i class="fa fa-caret-right" aria-hidden="true"></i>PMI
+                                                Aims</a></li>
+                                        <li><a href="#"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>Earthquake</a></li>
+                                        <li><a href="Flooding.html"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>Flooding</a></li>
+                                        <li><a href="Finicial Help.html"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>Finicial Help</a></li>
+                                        <li><a href="Old Age Home.html"><i class="fa fa-caret-right"
+                                                    aria-hidden="true"></i>Old Age Home</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-footer">
+                            <h2>Current Project</h2>
+                            <ul class="time-sidual">
+                                <li class="day"> Waqft Qurbani 2025.</span></li>
+                                <li class="day">Pak Medico Secondary School</li>
+                                <li class="day">Medical Camps</span></li>
+                                <li class="day">Rashan Distributions</span></li>
+                                <li class="day">PMI Welfare Housing Society</span></li>
+                                <li class="day">Old Age Home</span></li>
+                                <li class="day">Free 110 Home for Widows in Landhi</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="single-footer">
+                            <h2>Up Coming Project</h2>
+                            <p>PMI Housing Society</p>
+                            <p>PMI Univercity</p>
+                            <p>PMI Medical Collage</p>
+                            <p>PMI Nursing School</p>
+                            <P>PMI IT Programme </p>
+                            <p>PMI Special Child School</p>
+                            <p>Widows Monthy Kifalat</p>
+                            <p>Rashan Distribution</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Footer Top -->
+        <!-- Copyright -->
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <div class="copyright-content">
+                            <p>© Copyright 2025 | All Rights Reserved by <a href="https://www.pmiofficial.com"
+                                    target="_blank">pmiofficial.com</a> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Copyright -->
+    </footer>
+
+    <!--/ End Footer Area -->
+
+    <!-- jquery Min JS -->
+    <script src="js/jquery.min.js"></script>
+    <!-- jquery Migrate JS -->
+    <script src="js/jquery-migrate-3.0.0.js"></script>
+    <!-- jquery Ui JS -->
+    <script src="js/jquery-ui.min.js"></script>
+    <!-- Easing JS -->
+    <script src="js/easing.js"></script>
+    <!-- Color JS -->
+    <script src="js/colors.js"></script>
+    <!-- Popper JS -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap Datepicker JS -->
+    <script src="js/bootstrap-datepicker.js"></script>
+    <!-- Jquery Nav JS -->
+    <script src="js/jquery.nav.js"></script>
+    <!-- Slicknav JS -->
+    <script src="js/slicknav.min.js"></script>
+    <!-- ScrollUp JS -->
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <!-- Niceselect JS -->
+    <script src="js/niceselect.js"></script>
+    <!-- Tilt Jquery JS -->
+    <script src="js/tilt.jquery.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="js/owl-carousel.js"></script>
+    <!-- counterup JS -->
+    <script src="js/jquery.counterup.min.js"></script>
+    <!-- Steller JS -->
+    <script src="js/steller.js"></script>
+    <!-- Wow JS -->
+    <script src="js/wow.min.js"></script>
+    <!-- Magnific Popup JS -->
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <!-- Counter Up CDN JS -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+    <!-- Meezan Bank API -->
+    <script src="js/meezan-bank-api.js?v=2.1"></script>
+    <!-- Checkout Handler -->
+    <script src="js/checkout-handler.js?v=2.1"></script>
+
+    <script>
+        // Get DOM elements
+        const bankListBtn = document.getElementById('banklist');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModalBtn = document.getElementById('closeModal');
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        // Open modal when "VIEW BANK LIST" is clicked
+        bankListBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+
+        // Close modal when X button is clicked
+        closeModalBtn.addEventListener('click', function () {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside the modal content
+        modalOverlay.addEventListener('click', function (e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Tab switching functionality
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const tabId = this.getAttribute('data-tab');
+
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                // Show corresponding tab content
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Payment Form Modal Functionality
+        const donateOnlineBtn = document.getElementById('donateOnlineBtn');
+        const paymentModalOverlay = document.getElementById('paymentModalOverlay');
+        const closePaymentModalBtn = document.getElementById('closePaymentModal');
+        const cancelPaymentBtn = document.getElementById('cancelPayment');
+        const paymentForm = document.getElementById('paymentForm');
+
+        // Open payment modal when "DONATE ONLINE" is clicked
+        if (donateOnlineBtn) {
+            donateOnlineBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                paymentModalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // Close payment modal when X button is clicked
+        if (closePaymentModalBtn) {
+            closePaymentModalBtn.addEventListener('click', function () {
+                paymentModalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        }
+
+        // Close payment modal when Cancel button is clicked
+        if (cancelPaymentBtn) {
+            cancelPaymentBtn.addEventListener('click', function () {
+                paymentModalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        }
+
+        // Close payment modal when clicking outside the modal content
+        if (paymentModalOverlay) {
+            paymentModalOverlay.addEventListener('click', function (e) {
+                if (e.target === paymentModalOverlay) {
+                    paymentModalOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Close payment modal with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && paymentModalOverlay.classList.contains('active')) {
+                paymentModalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Format card number input (add spaces every 4 digits)
+        const cardNumberInput = document.getElementById('cardNumber');
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\s/g, '');
+                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                if (formattedValue.length <= 19) {
+                    e.target.value = formattedValue;
+                }
+            });
+        }
+
+        // Format expiration date input (MM/YY)
+        const expirationDateInput = document.getElementById('expirationDate');
+        if (expirationDateInput) {
+            expirationDateInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                e.target.value = value;
+            });
+        }
+
+        // Handle form submission
+        if (paymentForm) {
+            paymentForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Here you would typically send the payment data to your payment gateway
+                // For now, we'll just show an alert
+                alert('Payment form submitted! In a real implementation, this would connect to your payment gateway.');
+
+                // Close the modal after submission
+                paymentModalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+
+                // Reset form
+                paymentForm.reset();
+            });
+        }
+    </script>
+
+</body>
+
+</html>

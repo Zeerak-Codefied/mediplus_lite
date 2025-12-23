@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - Pakistan Medico International</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .payment-result-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+        }
+        .payment-result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: #f44336;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 40px;
+        }
+        .payment-result-card h1 {
+            color: #1A76D1;
+            margin-bottom: 10px;
+        }
+        .payment-result-card p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .btn-home {
+            background: #1A76D1;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+        .btn-home:hover {
+            background: #1565c0;
+            color: white;
+            text-decoration: none;
+        }
+        .btn-retry {
+            background: #4caf50;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .btn-retry:hover {
+            background: #45a049;
+            color: white;
+            text-decoration: none;
+        }
+        .diagnostic-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 13px;
+        }
+        .diagnostic-info strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #856404;
+        }
+        .diagnostic-info div {
+            margin: 5px 0;
+            color: #856404;
+        }
+        .diagnostic-info .footer {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ffc107;
+            font-size: 12px;
+            color: #856404;
+        }
+        .payment-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .payment-details-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .payment-details-row:last-child {
+            border-bottom: none;
+        }
+        .payment-details-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .payment-details-value {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-result-container">
+        <div class="payment-result-card">
+            <div class="error-icon">
+                <i class="fa fa-times"></i>
+            </div>
+            <h1>Payment Failed</h1>
+            <p>We're sorry, but your payment could not be processed. This could be due to insufficient funds, incorrect card details, or a network issue.</p>
+            
+            <div class="payment-details" id="paymentDetails" style="display: none;">
+                <div class="payment-details-row">
+                    <span class="payment-details-label">Order ID:</span>
+                    <span class="payment-details-value" id="orderId">-</span>
+                </div>
+                <div class="payment-details-row">
+                    <span class="payment-details-label">Amount:</span>
+                    <span class="payment-details-value" id="amount">-</span>
+                </div>
+            </div>
+            
+            <div id="diagnosticInfo" class="diagnostic-info" style="display: none;"></div>
+            
+            <p style="font-size: 14px; color: #999; margin-top: 20px;">
+                Please check your payment details and try again. If the problem persists, please contact your bank or our support team.
+            </p>
+            
+            <div>
+                <a href="index.html" class="btn-home">Return to Home</a>
+                <a href="index.html" class="btn-retry">Try Again</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/meezan-bank-api.js"></script>
+    <script>
+        // Verify payment status when page loads and capture error details
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId') || urlParams.get('mdOrder') || sessionStorage.getItem('meezanOrderId');
+            const orderNumber = urlParams.get('orderNumber') || sessionStorage.getItem('meezanOrderNumber');
+            
+            // Capture error details from URL parameters (Meezan Bank sends these)
+            const errorCode = urlParams.get('errorCode');
+            const errorMessage = urlParams.get('errorMessage');
+            const actionCode = urlParams.get('actionCode');
+            const actionCodeDescription = urlParams.get('actionCodeDescription');
+            
+            // Display stored order info
+            const paymentDetails = document.getElementById('paymentDetails');
+            if (sessionStorage.getItem('meezanOrderId')) {
+                document.getElementById('orderId').textContent = sessionStorage.getItem('meezanOrderId');
+                document.getElementById('amount').textContent = 'PKR ' + parseFloat(sessionStorage.getItem('meezanAmount') || 0).toLocaleString();
+                paymentDetails.style.display = 'block';
+            } else if (orderId) {
+                document.getElementById('orderId').textContent = orderId;
+                paymentDetails.style.display = 'block';
+            }
+            
+            // Collect diagnostic information
+            let diagnosticInfo = [];
+            
+            // Add URL parameters to diagnostics
+            if (errorCode) {
+                diagnosticInfo.push(`Error Code: ${errorCode}`);
+            }
+            if (errorMessage) {
+                diagnosticInfo.push(`Error Message: ${errorMessage}`);
+            }
+            if (actionCode) {
+                diagnosticInfo.push(`Action Code: ${actionCode}`);
+            }
+            if (actionCodeDescription) {
+                diagnosticInfo.push(`Action Description: ${actionCodeDescription}`);
+            }
+            
+            // Log all URL parameters for debugging
+            console.group('🔍 Payment Failure - URL Parameters');
+            for (const [key, value] of urlParams.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+            console.groupEnd();
+            
+            // Verify payment with Meezan Bank to get detailed status
+            if (orderId) {
+                try {
+                    // Get base path for proxy (same logic as MeezanBankAPI)
+                    let basePath = '';
+                    try {
+                        const scripts = document.getElementsByTagName('script');
+                        for (let script of scripts) {
+                            if (script.src && script.src.includes('meezan-bank-api.js')) {
+                                const scriptPath = new URL(script.src).pathname;
+                                const scriptDir = scriptPath.substring(0, scriptPath.lastIndexOf('/'));
+                                basePath = scriptDir.replace('/js', '');
+                                break;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Could not get base path from script tag:', e);
+                    }
+                    
+                    if (!basePath || basePath === '/') {
+                        let pathname = window.location.pathname;
+                        if (pathname.endsWith('/')) pathname = pathname.slice(0, -1);
+                        const lastSlashIndex = pathname.lastIndexOf('/');
+                        if (lastSlashIndex > 0) {
+                            const afterLastSlash = pathname.substring(lastSlashIndex + 1);
+                            if (afterLastSlash.includes('.')) {
+                                basePath = pathname.substring(0, lastSlashIndex);
+                            } else {
+                                basePath = pathname;
+                            }
+                        } else if (pathname === '/') {
+                            basePath = '';
+                        } else {
+                            basePath = pathname;
+                        }
+                    }
+                    if (basePath.endsWith('/')) basePath = basePath.slice(0, -1);
+                    
+                    const meezanAPI = new MeezanBankAPI({
+                        apiUrl: 'https://acquiring.meezanbank.com/payment/rest/',
+                        username: 'PAKISTANMEDICO_api',
+                        password: 'P987658',
+                        proxyUrl: basePath + '/api/meezan-bank-proxy.php'
+                    });
+                    
+                    const verification = await meezanAPI.getOrderStatus(orderId, orderNumber);
+                    
+                    console.group('🔍 Payment Failure - Order Status Verification');
+                    console.log('Order ID:', orderId);
+                    console.log('Order Number:', orderNumber);
+                    console.log('Verification Result:', verification);
+                    console.groupEnd();
+                    
+                    // Add verification details to diagnostics
+                    if (verification && typeof verification === 'object') {
+                        if (verification.orderStatus !== undefined) {
+                            diagnosticInfo.push(`Order Status: ${verification.orderStatus} (2 = Success, others = Failed)`);
+                        }
+                        if (verification.actionCodeDescription) {
+                            diagnosticInfo.push(`Bank Response: ${verification.actionCodeDescription}`);
+                        }
+                        if (verification.errorMessage) {
+                            diagnosticInfo.push(`Bank Error: ${verification.errorMessage}`);
+                        }
+                        if (verification.errorCode && verification.errorCode !== '0' && verification.errorCode !== 0) {
+                            diagnosticInfo.push(`Bank Error Code: ${verification.errorCode}`);
+                        }
+                        if (verification.actionCode) {
+                            diagnosticInfo.push(`Bank Action Code: ${verification.actionCode}`);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error verifying payment status:', error);
+                    diagnosticInfo.push(`Status Check Error: ${error.message}`);
+                }
+            }
+            
+            // Display diagnostic information if available
+            const diagnosticDiv = document.getElementById('diagnosticInfo');
+            if (diagnosticInfo.length > 0) {
+                diagnosticDiv.innerHTML = '<strong>Diagnostic Information:</strong>' +
+                    diagnosticInfo.map(info => `<div>• ${info}</div>`).join('') +
+                    '<div class="footer">' +
+                    '<strong>If this issue persists with multiple cards, it may indicate:</strong><br>' +
+                    '• Bank-side restrictions or 3D Secure authentication issues<br>' +
+                    '• Merchant account configuration problem (contact Meezan Bank support)<br>' +
+                    '• Transaction limits or card restrictions<br>' +
+                    '• Network/connectivity issues during payment processing<br><br>' +
+                    '<strong>Recommended Actions:</strong><br>' +
+                    '1. Check with your bank if the card is enabled for online transactions<br>' +
+                    '2. Verify 3D Secure is enabled on your card<br>' +
+                    '3. Contact Meezan Bank support with the error codes above<br>' +
+                    '4. Try a different card or payment method</div>';
+                diagnosticDiv.style.display = 'block';
+            }
+            
+            // Clear session storage after a delay (keep for debugging)
+            setTimeout(() => {
+                sessionStorage.removeItem('meezanOrderId');
+                sessionStorage.removeItem('meezanOrderNumber');
+                sessionStorage.removeItem('meezanAmount');
+                sessionStorage.removeItem('meezanFund');
+            }, 60000); // Keep for 60 seconds for debugging
+        });
+    </script>
+</body>
+</html>
+
