@@ -462,13 +462,15 @@
 
 
         /* Modal styles */
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -484,258 +486,150 @@
         }
 
         .modal {
-            background-color: white;
-            border-radius: 12px;
+            background-color: #ffffff;
+            border-radius: 16px;
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transform: translateY(20px);
-            transition: transform 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: block !important;
             margin: auto;
         }
 
         .modal-overlay.active .modal {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .modal-header {
-            background: #1A76D1;
+            background: linear-gradient(135deg, #1A76D1 0%, #1565C0 100%);
             color: white;
-            padding: 20px 30px;
+            padding: 24px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 10;
+            border-radius: 16px 16px 0 0;
         }
 
         .modal-title {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 1.75rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .modal-title i {
-            font-size: 1.6rem;
+        .modal-title .icon-svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
         }
 
         .close-btn {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
-            font-size: 1.8rem;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s ease;
             width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+            padding: 0;
         }
 
         .close-btn:hover {
-            transform: scale(1.1);
-            background-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .close-btn svg {
+            stroke: white;
         }
 
         .modal-body {
-            padding: 30px;
+            padding: 32px;
             text-align: left;
-        }
-
-        .bank-section {
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 2px dashed #e0e0e0;
-        }
-
-        .bank-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .bank-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            gap: 15px;
-        }
-
-        .bank-logo-circle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 70px;
-            height: 70px;
-            background: #1A76D1;
-            border-radius: 50%;
-            color: white;
-            font-size: 2rem;
-            box-shadow: 0 4px 10px rgba(26, 95, 122, 0.3);
-            flex-shrink: 0;
-        }
-
-        .bank-header-text h2 {
-            color: #1A76D1;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .bank-header-text p {
-            color: #666;
-            font-size: 1rem;
-        }
-
-        .bank-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .bank-item {
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            border-left: 4px solid #1A76D1;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .bank-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .bank-label {
-            font-weight: 600;
-            color: #1A76D1;
-            margin-bottom: 8px;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bank-label i {
-            font-size: 1.1rem;
-        }
-
-        .bank-value {
-            font-size: 1.1rem;
-            color: #333;
-            word-break: break-all;
-            line-height: 1.4;
-        }
-
-        .bank-value.iban,
-        .bank-value.swift {
-            font-family: monospace;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .account-title {
-            background-color: #e8f4fc;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            border-left: 4px solid #1A76D1;
-        }
-
-        .account-title h3 {
-            color: #1A76D1;
-            margin-bottom: 8px;
-            font-size: 1.3rem;
-        }
-
-        .account-title p {
-            color: #333;
-            font-size: 1.1rem;
-            line-height: 1.4;
-        }
-
-        .currency-accounts {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .currency-account {
-            flex: 1;
-            min-width: 200px;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border-radius: 8px;
-            border: 1px solid #d1e7ff;
-        }
-
-        .currency-label {
-            font-weight: 600;
-            color: #1A76D1;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .currency-value {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .instructions {
-            margin-top: 25px;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            color: #555;
-            border-left: 4px solid #1A76D1;
-        }
-
-        .instructions p {
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: #f8f9fa;
         }
 
         .tab-buttons {
             display: flex;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 28px;
+            background: white;
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 8px 32px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
         }
 
         .tab-btn {
-            padding: 12px 25px;
-            background: none;
-            border: none;
-            font-size: 1.1rem;
+            flex: 1;
+            padding: 14px 24px;
+            background: transparent;
+            border: none !important;
+            outline: none !important;
+            font-size: 1rem;
             font-weight: 600;
             color: #666;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-btn svg {
+            stroke: currentColor;
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .bank-logo-tab {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        .bank-logo-header {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .tab-btn.active {
             color: #1A76D1;
-            border-bottom: 3px solid #1A76D1;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            box-shadow: 0 4px 12px rgba(26, 118, 209, 0.25) !important;
+            transform: translateY(-2px);
+            border: none !important;
+            outline: none !important;
         }
 
         .tab-btn:hover:not(.active) {
             color: #1A76D1;
-            background-color: #f8f9fa;
+            background: #f5f5f5;
+            transform: translateY(-1px);
+        }
+
+        .tab-btn:hover img,
+        .tab-btn:hover svg {
+            transform: scale(1.1);
         }
 
         .tab-content {
@@ -746,46 +640,356 @@
             display: block;
         }
 
+        .bank-section {
+            position: relative;
+        }
+
+        .bank-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .bank-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+            gap: 16px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #e8f4fc;
+        }
+
+        .bank-logo-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 72px;
+            background: transparent;
+            border-radius: 0;
+            color: white;
+            box-shadow: none;
+            flex-shrink: 0;
+            padding: 0;
+        }
+
+        .bank-logo-circle.habib-gradient {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .bank-logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .bank-header-text {
+            flex: 1;
+        }
+
+        .bank-header-text h2 {
+            color: #1A76D1;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .bank-header-text p {
+            color: #666;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .copy-all-btn {
+            background: linear-gradient(135deg, #1A76D1 0%, #1565C0 100%);
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(26, 118, 209, 0.3);
+        }
+
+        .copy-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(26, 118, 209, 0.4);
+        }
+
+        .copy-all-btn svg {
+            stroke: white;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Form-like Styles */
+        .account-title-form {
+            margin-bottom: 28px;
+        }
+
+        .bank-details-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #1A76D1;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .form-label svg {
+            stroke: #1A76D1;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .form-field-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border: none !important;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-field-wrapper:hover {
+            background: #ffffff;
+        }
+
+        .form-field-wrapper:focus-within {
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(26, 118, 209, 0.1);
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 14px 16px;
+            border: none !important;
+            background: transparent;
+            font-size: 1rem;
+            color: #333;
+            font-weight: 500;
+            outline: none;
+            border-radius: 12px;
+        }
+
+        .form-input:focus {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        textarea {
+            border: none !important;
+            outline: none !important;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Custom Scrollbar - Theme Colored and Thinner */
+        .modal {
+            scrollbar-width: thin;
+            scrollbar-color: #1A76D1 #f1f1f1;
+        }
+
+        .modal::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #1A76D1 0%, #1565C0 100%);
+            border-radius: 10px;
+        }
+
+        .modal::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #1565C0 0%, #0d47a1 100%);
+        }
+
+        .form-input-iban,
+        .form-input-swift {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.2s ease;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .copy-btn:hover {
+            background: #e3f2fd;
+            color: #1A76D1;
+        }
+
+        .copy-btn.copied {
+            color: #4caf50;
+        }
+
+        .copy-btn .copy-icon,
+        .copy-btn .check-icon {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        .copy-btn .check-icon {
+            display: none;
+        }
+
+        .copy-btn.copied .copy-icon {
+            display: none;
+        }
+
+        .copy-btn.copied .check-icon {
+            display: block;
+        }
+
+        .instructions {
+            margin-top: 32px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: #1565C0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            border-left: 4px solid #1A76D1;
+        }
+
+        .instructions svg {
+            stroke: #1A76D1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .instructions p {
+            margin: 0 0 8px 0;
+            line-height: 1.6;
+        }
+
+        .instructions p:last-child {
+            margin-bottom: 0;
+        }
+
+        .instructions strong {
+            color: #0d47a1;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
             }
 
-            .bank-details {
-                grid-template-columns: 1fr;
+            .modal {
+                width: 95%;
+                max-width: 95%;
+                border-radius: 12px;
             }
 
             .modal-body {
-                padding: 20px;
+                padding: 24px;
             }
 
             .modal-header {
-                padding: 15px 20px;
-            }
-
-            .bank-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-
-            .tab-buttons {
-                flex-direction: column;
-            }
-
-            .tab-btn {
-                text-align: left;
-                border-bottom: 1px solid #e0e0e0;
-            }
-
-            .tab-btn.active {
-                border-bottom: 3px solid #1a5f7a;
+                padding: 20px 24px;
             }
 
             .modal-title {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
             }
 
+            .bank-section {
+                padding: 24px;
+            }
+
+            .bank-header {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .bank-header-text h2 {
+                font-size: 1.5rem;
+            }
+
+            .copy-all-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .tab-buttons {
+                flex-direction: row;
+                padding: 4px;
+            }
+
+            .tab-btn {
+                padding: 12px 16px;
+                font-size: 0.95rem;
+            }
+
+            .form-field-wrapper {
+                flex-direction: row;
+            }
+
+            .form-input {
+                font-size: 0.95rem;
+                padding: 12px 14px;
+            }
+
+            .copy-btn {
+                padding: 10px 14px;
+            }
+
+            .instructions {
+                padding: 16px;
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -799,11 +1003,94 @@
             }
 
             .modal {
-                width: 95%;
+                width: 98%;
+                max-width: 98%;
+                border-radius: 12px;
             }
 
-            .currency-accounts {
+            .modal-header {
+                padding: 16px 20px;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+
+            .modal-title .icon-svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .bank-section {
+                padding: 20px;
+            }
+
+            .bank-header {
                 flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .bank-logo-circle {
+                width: 60px;
+                height: 60px;
+            }
+
+            .bank-header-text h2 {
+                font-size: 1.3rem;
+            }
+
+            .copy-all-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .tab-btn {
+                width: 100%;
+                padding: 14px;
+            }
+
+            .form-label {
+                font-size: 0.9rem;
+            }
+
+            .form-input {
+                font-size: 0.9rem;
+                padding: 12px;
+            }
+
+            .form-input-iban,
+            .form-input-swift {
+                font-size: 0.85rem;
+            }
+
+            .copy-btn {
+                padding: 10px 12px;
+            }
+
+            .copy-btn .copy-icon,
+            .copy-btn .check-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .instructions {
+                padding: 14px;
+                font-size: 0.85rem;
+                flex-direction: column;
+                gap: 8px;
             }
         }
 
@@ -1789,6 +2076,105 @@
                 grid-template-columns: 1fr !important;
             }
         }
+
+        /* Banner GIF Styles */
+        .banner-gif-section {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            padding: 20px 0;
+        }
+
+        .banner-gif-section .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .banner-gif {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            max-height: 600px;
+        }
+
+        @media (max-width: 768px) {
+            .banner-gif {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-gif {
+                max-height: 250px;
+            }
+        }
+
+        /* Add top padding to schedule section */
+        .schedule {
+            padding-top: 80px !important;
+        }
+
+        @media (max-width: 768px) {
+            .schedule {
+                padding-top: 60px !important;
+            }
+        }
+
+        /* Make schedule cards same height */
+        .schedule-inner .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .schedule-inner .row > [class*="col-"] {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .single-schedule {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .single-schedule.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .single-schedule .inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .single-schedule .single-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Stagger animation delay for each card */
+        .single-schedule.first.animate-in {
+            transition-delay: 0.1s;
+        }
+
+        .single-schedule.middle.animate-in {
+            transition-delay: 0.2s;
+        }
+
+        .single-schedule.last.animate-in {
+            transition-delay: 0.3s;
+        }
     </style>
 
 </head>
@@ -1862,9 +2248,7 @@
                                                 <li><a href="aims.html">Aims & Object</a></li>
                                                 <li><a href="earthquake.html">Earthquake</a></li>
                                                 <li><a href="Flooding.html">Flooding</a></li>
-                                                <li><a href="Finicial Help.html">Finicial Help</a></li>
                                                 <li><a href="Old Age Home.html">Old Age Home</a></li>
-                                                <li><a href="Futher Planning.html">Futher Planning</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="Projects.html">Project </i></a>
@@ -1890,93 +2274,13 @@
     </header>
     <!-- End Header Area -->
 
-    <!-- Slider Area -->
-    <section class="slider">
-        <div class="hero-slider">
-            <!-- Start Single Slider -->
-            <div class="single-slider" style="background-image:url('img/ather-1.jpeg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <!-- <div class="text">
-								<h1>PMI Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
-								<p>Pakistan Medico Health Centre, Orangi Township, Karachi was conceived by us more or
-									less at the time of
-									the foundation of our organization. However we conducted a health survey of 2020.
-									Subsequently, a
-									8
-
-									questionnaire was designed to survey the health pattern knowledge of adults and
-									children. Thus the Health
-									Centre was designed accordingly. Orangi Township has a population of 2500,000. This
-									was the only proper
-									health centre in the area. This Township is spread over roughly on 42 sqr miles. The
-									Health Centre today
-									consists of curative, preventive, educational and general advisory services. </p>
-								<div class="button">
-
-									<a href="#" class="btn primary">Learn More</a>
-								</div>
-							</div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Single Slider -->
-            <!-- Start Single Slider -->
-            <div class="single-slider" style="background-image:url('img/ather-2.jpeg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <!-- <div class="text">
-								<h1>PMI Provide <span>Education</span> Services That You Can <span>Trust!</span></h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl
-									pellentesque, faucibus libero eu, gravida quam. </p>
-								<div class="button">
-
-									<a href="#" class="btn primary">Learn More</a>
-								</div>
-							</div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Start End Slider -->
-            <!-- Start Single Slider -->
-            <div class="single-slider" style="background-image:url('img/ather-3.jpeg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <!-- <div class="text">
-								<h1>PMI Provide <span>Old Age Home</span> Services That You Can <span>Trust!</span></h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl
-									pellentesque, faucibus libero eu, gravida quam. </p>
-								<div class="button">
-
-									<a href="#" class="btn primary">Learn More</a>
-								</div>
-							</div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 4th slider -->
-
-            <div class="single-slider" style="background-image:url('img/ather-4.jpeg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <div class="text">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Single Slider -->
+    <!-- Banner GIF Area -->
+    <section class="banner-gif-section">
+        <div class="container">
+            <img src="assets/banner_video.gif" alt="Pakistan Medico International Banner" class="banner-gif">
         </div>
     </section>
-    <!--/ End Slider Area -->
+    <!--/ End Banner GIF Area -->
 
     <!-- Start Schedule Area -->
 
@@ -2090,7 +2394,7 @@
                 </svg>
             </div>
             <h2>Donate Online</h2>
-            <p>Click below to make donations directly with any Visa/MasterCard through the HBL Payment Gateway</p>
+            <p>Click below to make donations directly with any Visa/MasterCard through the Online Payment Gateway</p>
             <a id="donateOnlineBtn" class="card-button">DONATE ONLINE</a>
         </div>
 
@@ -2272,17 +2576,29 @@
         <div class="modal">
             <div class="modal-header">
                 <div class="modal-title">
-                    <i class="fas fa-university"></i> Bank Account Details
+                    <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Bank Account Details
                 </div>
-                <button class="close-btn" id="closeModal">
-                    <i class="fas fa-times"></i>
+                <button class="close-btn" id="closeModal" aria-label="Close modal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </button>
             </div>
 
             <div class="modal-body">
                 <div class="tab-buttons">
-                    <button class="tab-btn active" data-tab="meezan">Meezan Bank</button>
-                    <button class="tab-btn" data-tab="habib">Habib Metro Bank</button>
+                    <button class="tab-btn active" data-tab="meezan">
+                        <img src="assets/meezan-bank-logo.png" alt="Meezan Bank" class="bank-logo-tab">
+                        Meezan Bank
+                    </button>
+                    <button class="tab-btn" data-tab="habib">
+                        <img src="assets/habib_metro.svg" alt="Habib Metro Bank" class="bank-logo-tab">
+                        Habib Metro Bank
+                    </button>
                 </div>
 
                 <!-- Meezan Bank Section -->
@@ -2290,67 +2606,143 @@
                     <div class="bank-section">
                         <div class="bank-header">
                             <div class="bank-logo-circle">
-                                <i class="fas fa-landmark"></i>
+                                <img src="assets/meezan-bank-logo.png" alt="Meezan Bank" class="bank-logo-header">
                             </div>
                             <div class="bank-header-text">
                                 <h2>Meezan Bank Limited</h2>
                                 <p>Tooba Masjid Branch, Karachi</p>
                             </div>
+                            <button class="copy-all-btn" data-bank="meezan" title="Copy all bank details">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
                         </div>
 
-                        <div class="account-title">
-                            <h3>Account Title</h3>
-                            <p>PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION</p>
+                        <div class="account-title-form">
+                            <label class="form-label">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Account Title
+                            </label>
+                            <div class="form-field-wrapper">
+                                <input type="text" class="form-input" value="PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION" readonly>
+                            </div>
                         </div>
 
-                        <div class="bank-details">
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-building"></i> Bank Name
+                        <div class="bank-details-form">
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Bank Name
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="MEEZAN BANK LIMITED" readonly>
                                 </div>
-                                <div class="bank-value">MEEZAN BANK LIMITED</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-code-branch"></i> Branch Code
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Code
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="1020" readonly>
                                 </div>
-                                <div class="bank-value">1020</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-map-marker-alt"></i> Branch Name
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Name
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="TOOBA MASJID BRANCH" readonly>
                                 </div>
-                                <div class="bank-value">TOOBA MASJID BRANCH</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-map-pin"></i> Branch Address
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Address
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="PLOT NO 10-D, A COMMERCIAL MARKET DHA PHASE II KARACHI" readonly>
                                 </div>
-                                <div class="bank-value">PLOT NO 10-D, A COMMERCIAL MARKET DHA PHASE II KARACHI</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-id-card"></i> Account No
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Account No
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="1020-0113583984" readonly>
                                 </div>
-                                <div class="bank-value">1020-0113583984</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-credit-card"></i> IBAN
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="1" y1="10" x2="23" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    IBAN
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input form-input-iban" value="PK06MEZN0010200113583984" readonly>
+                                    <button class="copy-btn" data-copy="PK06MEZN0010200113583984" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                                <div class="bank-value iban">PK06MEZN0010200113583984</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-globe"></i> SWIFT CODE
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    SWIFT CODE
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input form-input-swift" value="MEZNPKKAGRD" readonly>
+                                    <button class="copy-btn" data-copy="MEZNPKKAGRD" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                                <div class="bank-value swift">MEZNPKKAGRD</div>
                             </div>
                         </div>
                     </div>
@@ -2360,82 +2752,174 @@
                 <div class="tab-content" id="habib-tab">
                     <div class="bank-section">
                         <div class="bank-header">
-                            <div class="bank-logo-circle"
-                                style="background: linear-gradient(135deg, #8b0000, #b22222);">
-                                <i class="fas fa-university"></i>
+                            <div class="bank-logo-circle habib-gradient">
+                                <img src="assets/habib_metro.svg" alt="Habib Metro Bank" class="bank-logo-header">
                             </div>
                             <div class="bank-header-text">
                                 <h2>Habib Metro Ltd.</h2>
                                 <p>HBZ Plaza Branch, I.I Chandrigar Road</p>
                             </div>
+                            <button class="copy-all-btn" data-bank="habib" title="Copy all bank details">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
                         </div>
 
-                        <div class="account-title">
-                            <h3>Account Title</h3>
-                            <p>PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION</p>
+                        <div class="account-title-form">
+                            <label class="form-label">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Account Title
+                            </label>
+                            <div class="form-field-wrapper">
+                                <input type="text" class="form-input" value="PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION" readonly>
+                            </div>
                         </div>
 
-                        <div class="bank-details">
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-building"></i> Bank Name
-                                </div>
-                                <div class="bank-value">HABIB METRO LTD.</div>
-                            </div>
-
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-map-marker-alt"></i> Branch Name
-                                </div>
-                                <div class="bank-value">HBZ PLAZA BRANCH</div>
-                            </div>
-
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-map-pin"></i> Branch Address
-                                </div>
-                                <div class="bank-value">I.I CHANDRIGAR ROAD</div>
-                            </div>
-
-                            <div class="currency-accounts">
-                                <div class="currency-account">
-                                    <div class="currency-label">
-                                        <i class="fas fa-rupee-sign"></i> PKR Account No
-                                    </div>
-                                    <div class="currency-value">152,0271–4037–0551</div>
-                                </div>
-
-                                <div class="currency-account">
-                                    <div class="currency-label">
-                                        <i class="fas fa-dollar-sign"></i> US Dollar Account No
-                                    </div>
-                                    <div class="currency-value">0152–2333–3037–0551</div>
+                        <div class="bank-details-form">
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Bank Name
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="HABIB METRO LTD." readonly>
                                 </div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-credit-card"></i> IBAN
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Name
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="HBZ PLAZA BRANCH" readonly>
                                 </div>
-                                <div class="bank-value iban">PK34 MPBL 0152–2333–3037–0551</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-globe"></i> SWIFT CODE
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Address
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="I.I CHANDRIGAR ROAD" readonly>
                                 </div>
-                                <div class="bank-value swift">MPBL PKKA052</div>
+                            </div>
+
+                            <div class="form-field form-field-currency">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 6V18M9 9C9 8.46957 9.21071 7.96086 9.58579 7.58579C9.96086 7.21071 10.4696 7 11 7H13C13.5304 7 14.0391 7.21071 14.4142 7.58579C14.7893 7.96086 15 8.46957 15 9C15 9.53043 14.7893 10.0391 14.4142 10.4142C14.0391 10.7893 13.5304 11 13 11H11C10.4696 11 9.96086 11.2107 9.58579 11.5858C9.21071 11.9609 9 12.4696 9 13C9 13.5304 9.21071 14.0391 9.58579 14.4142C9.96086 14.7893 10.4696 15 11 15H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    PKR Account No
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="152,0271–4037–0551" readonly>
+                                    <button class="copy-btn" data-copy="152,0271–4037–0551" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-field form-field-currency">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 6V18M9 9C9 8.46957 9.21071 7.96086 9.58579 7.58579C9.96086 7.21071 10.4696 7 11 7H13C13.5304 7 14.0391 7.21071 14.4142 7.58579C14.7893 7.96086 15 8.46957 15 9C15 9.53043 14.7893 10.0391 14.4142 10.4142C14.0391 10.7893 13.5304 11 13 11H11C10.4696 11 9.96086 11.2107 9.58579 11.5858C9.21071 11.9609 9 12.4696 9 13C9 13.5304 9.21071 14.0391 9.58579 14.4142C9.96086 14.7893 10.4696 15 11 15H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    US Dollar Account No
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="0152–2333–3037–0551" readonly>
+                                    <button class="copy-btn" data-copy="0152–2333–3037–0551" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="1" y1="10" x2="23" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    IBAN
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input form-input-iban" value="PK34 MPBL 0152–2333–3037–0551" readonly>
+                                    <button class="copy-btn" data-copy="PK34 MPBL 0152–2333–3037–0551" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    SWIFT CODE
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input form-input-swift" value="MPBL PKKA052" readonly>
+                                    <button class="copy-btn" data-copy="MPBL PKKA052" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="instructions">
-                    <p><i class="fas fa-info-circle"></i> <strong>Note:</strong> Use these details for bank transfers
-                        and donations.</p>
-                    <p><i class="fas fa-hand-holding-usd"></i> Please verify the account details before making any
-                        transaction.</p>
-                    <p><i class="fas fa-exchange-alt"></i> Switch between bank accounts using the tabs above.</p>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div>
+                        <p><strong>Note:</strong> Use these details for bank transfers and donations.</p>
+                        <p>Please verify the account details before making any transaction.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3053,8 +3537,6 @@
                                                     aria-hidden="true"></i>Earthquake</a></li>
                                         <li><a href="Flooding.html"><i class="fa fa-caret-right"
                                                     aria-hidden="true"></i>Flooding</a></li>
-                                        <li><a href="Finicial Help.html"><i class="fa fa-caret-right"
-                                                    aria-hidden="true"></i>Finicial Help</a></li>
                                         <li><a href="Old Age Home.html"><i class="fa fa-caret-right"
                                                     aria-hidden="true"></i>Old Age Home</a></li>
                                     </ul>
@@ -3210,6 +3692,137 @@
             });
         });
 
+        // Copy to clipboard functionality
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const textToCopy = this.getAttribute('data-copy');
+                const copyIcon = this.querySelector('.copy-icon');
+                const checkIcon = this.querySelector('.check-icon');
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Show success state
+                    this.classList.add('copied');
+                    
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        this.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        this.classList.add('copied');
+                        setTimeout(() => {
+                            this.classList.remove('copied');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy:', err);
+                    }
+                    document.body.removeChild(textArea);
+                });
+            });
+        });
+
+        // Share and Copy functionality
+        function getBankDetails(bankType) {
+            let shareText = '';
+            if (bankType === 'meezan') {
+                shareText = `Meezan Bank Limited - Bank Account Details\n\n` +
+                    `Account Title: PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION\n` +
+                    `Bank Name: MEEZAN BANK LIMITED\n` +
+                    `Account No: 1020-0113583984\n` +
+                    `IBAN: PK06MEZN0010200113583984\n` +
+                    `SWIFT CODE: MEZNPKKAGRD`;
+            } else if (bankType === 'habib') {
+                shareText = `Habib Metro Ltd. - Bank Account Details\n\n` +
+                    `Account Title: PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION\n` +
+                    `Bank Name: HABIB METRO LTD.\n` +
+                    `US Dollar Account No: 0152–2333–3037–0551\n` +
+                    `IBAN: PK34 MPBL 0152–2333–3037–0551\n` +
+                    `SWIFT CODE: MPBL PKKA052`;
+            }
+            return shareText;
+        }
+
+        // Copy all button functionality
+        document.querySelectorAll('.copy-all-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const bankType = this.getAttribute('data-bank');
+                const shareText = getBankDetails(bankType);
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showCopyNotification('Bank details copied to clipboard!');
+                }).catch(err => {
+                    showCopyNotification('Bank details copied to clipboard!');
+                });
+            });
+        });
+
+        function showCopyNotification(message = 'Bank details copied to clipboard!') {
+            // Show temporary notification
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 16px 24px;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-weight: 600;
+                animation: slideIn 0.3s ease;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add CSS animations for notification
+        if (!document.getElementById('share-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'share-notification-styles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(400px);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOut {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(400px);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
         // Payment Form Modal Functionality - Use Checkout Handler
         const donateOnlineBtn = document.getElementById('donateOnlineBtn');
 
@@ -3339,6 +3952,18 @@
 
             window.addEventListener('scroll', handleScroll, { passive: true });
             handleScroll(); // Check on load
+        });
+
+        // Animation for schedule cards on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const scheduleCards = document.querySelectorAll('.single-schedule');
+            
+            // Add animate-in class to schedule cards with staggered delay
+            scheduleCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, 200 + (index * 150));
+            });
         });
 
         // Scroll-triggered animation for donation cards with enter/exit animations

@@ -111,9 +111,7 @@
 											<li><a href="aims.html">Aims & Object</a></li>
 											<li class="active"><a href="earthquake.html">Earthquake</a></li>
 											<li><a href="Flooding.html">Flooding</a></li>
-											<li><a href="Finicial Help.html">Finicial Help</a></li>
 											<li><a href="Old Age Home.html">Old Age Home</a></li>
-											<li><a href="Futher Planning.html">Futher Planning</a></li>
 											</ul>
 											<li><a href="Projects.html">Project </i></a>
 											<li><a href="About Us.html">About Us</a>
@@ -127,7 +125,7 @@
 							</div>
 							<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<a href="appointment.html" class="btn">Donate Now</a>
+									<a href="#" class="btn" id="donateNowBtn">Donate Now</a>
 								</div>
 							</div>
 						</div>
@@ -340,7 +338,6 @@ Conclusion
 											<li><a href="aims.html"><i class="fa fa-caret-right" aria-hidden="true"></i>PMI Aims</a></li>
 											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Earthquake</a></li>
 											<li><a href="Flooding.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Flooding</a></li>
-											<li><a href="Finicial Help.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Finicial Help</a></li>
 											<li><a href="Old Age Home.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Old Age Home</a></li>	
 										</ul>
 									</div>
@@ -434,5 +431,399 @@ Conclusion
 		<script src="js/bootstrap.min.js"></script>
 		<!-- Main JS -->
 		<script src="js/main.js"></script>
+		<!-- Meezan Bank API -->
+		<script src="js/meezan-bank-api.js?v=2.1"></script>
+		<!-- Checkout Handler -->
+		<script src="js/checkout-handler.js?v=2.1"></script>
+		<!-- Global Donation Modal -->
+		<script src="js/global-donation-modal.js"></script>
+		
+		<!-- Checkout Modal CSS -->
+		<style>
+		.checkout-modal-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0, 0, 0, 0.75);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 10000;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s ease, visibility 0.3s ease;
+			padding: 20px;
+			backdrop-filter: blur(4px);
+			-webkit-backdrop-filter: blur(4px);
+		}
+		.checkout-modal-overlay.active {
+			opacity: 1;
+			visibility: visible;
+		}
+		.checkout-modal-container {
+			width: 100%;
+			max-width: 1200px;
+			max-height: 90vh;
+			transform: translateX(100%);
+			transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+		.checkout-modal-overlay.active .checkout-modal-container {
+			transform: translateX(0);
+		}
+		.checkout-modal {
+			background: #ffffff;
+			border-radius: 20px;
+			overflow: hidden;
+			box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+			display: flex;
+			flex-direction: row;
+			height: 85vh;
+			max-height: 900px;
+			min-height: 650px;
+		}
+		.checkout-left {
+			background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
+			color: #ffffff;
+			padding: 50px 40px;
+			width: 42%;
+			min-width: 380px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			position: sticky;
+			top: 0;
+			height: 100%;
+			overflow-y: auto;
+		}
+		.checkout-left::-webkit-scrollbar {
+			width: 6px;
+		}
+		.checkout-left::-webkit-scrollbar-track {
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 10px;
+		}
+		.checkout-left::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 10px;
+		}
+		.checkout-header h2 {
+			font-size: 32px;
+			font-weight: 700;
+			margin: 0 0 10px 0;
+			color: #ffffff;
+		}
+		.checkout-header p {
+			font-size: 16px;
+			color: rgba(255, 255, 255, 0.9);
+			margin: 0;
+		}
+		.donation-summary-box {
+			background: rgba(255, 255, 255, 0.15);
+			backdrop-filter: blur(10px);
+			border-radius: 16px;
+			padding: 40px 30px;
+			margin: 30px 0;
+			text-align: center;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			min-height: 200px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		.summary-label {
+			font-size: 13px;
+			color: rgba(255, 255, 255, 0.85);
+			margin-bottom: 15px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 600;
+		}
+		.summary-amount {
+			font-size: 42px;
+			font-weight: 700;
+			color: #ffffff;
+			margin: 15px 0;
+			line-height: 1.1;
+			height: 70px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.summary-fund {
+			font-size: 16px;
+			color: #4caf50;
+			font-weight: 500;
+			margin-top: 10px;
+		}
+		.security-info-box {
+			background: rgba(255, 255, 255, 0.15);
+			backdrop-filter: blur(10px);
+			border-radius: 12px;
+			padding: 20px;
+			display: flex;
+			align-items: center;
+			gap: 15px;
+		}
+		.security-icon {
+			font-size: 32px;
+			color: #4caf50;
+		}
+		.security-title {
+			font-size: 16px;
+			font-weight: 600;
+			color: #ffffff;
+			margin-bottom: 5px;
+		}
+		.security-text {
+			font-size: 13px;
+			color: rgba(255, 255, 255, 0.8);
+		}
+		.checkout-right {
+			width: 58%;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			background: #ffffff;
+			overflow: hidden;
+		}
+		.checkout-form-header {
+			padding: 35px 45px 25px;
+			border-bottom: 1px solid #e8e8e8;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background: #ffffff;
+			position: sticky;
+			top: 0;
+			z-index: 10;
+		}
+		.checkout-form-header h3 {
+			font-size: 22px;
+			font-weight: 700;
+			color: #1A76D1;
+			margin: 0;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+		.checkout-close-btn {
+			background: transparent;
+			border: none;
+			font-size: 22px;
+			color: #666;
+			cursor: pointer;
+			padding: 8px;
+			width: 40px;
+			height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			transition: all 0.3s ease;
+		}
+		.checkout-close-btn:hover {
+			color: #1A76D1;
+			transform: rotate(90deg);
+			background: #f5f5f5;
+		}
+		.checkout-form {
+			padding: 35px 45px 45px;
+			flex: 1;
+			overflow-y: auto;
+		}
+		.checkout-form::-webkit-scrollbar {
+			width: 8px;
+		}
+		.checkout-form::-webkit-scrollbar-track {
+			background: #f5f5f5;
+			border-radius: 10px;
+		}
+		.checkout-form::-webkit-scrollbar-thumb {
+			background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
+			border-radius: 10px;
+		}
+		.checkout-form .form-group {
+			margin-bottom: 20px;
+		}
+		.checkout-form .form-label {
+			display: block;
+			font-size: 14px;
+			font-weight: 600;
+			color: #333;
+			margin-bottom: 8px;
+		}
+		.checkout-form .form-control {
+			width: 100%;
+			padding: 14px 18px;
+			border: 2px solid #e0e0e0;
+			border-radius: 10px;
+			font-size: 15px;
+			transition: all 0.3s ease;
+			font-family: inherit;
+			background: #ffffff;
+		}
+		.checkout-form .form-control:focus {
+			outline: none;
+			border-color: #1A76D1;
+			box-shadow: 0 0 0 4px rgba(26, 118, 209, 0.1);
+		}
+		.donation-amount-buttons {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 12px;
+			margin-bottom: 12px;
+		}
+		.amount-btn {
+			padding: 14px 20px;
+			background: #ffffff;
+			border: 2px solid #e0e0e0;
+			border-radius: 10px;
+			font-size: 16px;
+			font-weight: 600;
+			color: #333;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		.amount-btn:hover {
+			background: #e8f4fc;
+			border-color: #1A76D1;
+			color: #1A76D1;
+		}
+		.amount-btn.active {
+			background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
+			border-color: #1A76D1;
+			color: #ffffff;
+		}
+		.form-actions {
+			margin-top: 30px;
+			display: flex;
+			gap: 15px;
+		}
+		.btn-submit {
+			flex: 1;
+			padding: 16px 28px;
+			background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
+			color: #ffffff;
+			border: none;
+			border-radius: 12px;
+			font-size: 16px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		.btn-submit:hover {
+			background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+			transform: translateY(-2px);
+		}
+		.btn-cancel {
+			padding: 16px 28px;
+			background: #ffffff;
+			color: #666;
+			border: 2px solid #e0e0e0;
+			border-radius: 12px;
+			font-size: 16px;
+			font-weight: 500;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+		.btn-cancel:hover {
+			background: #f8f8f8;
+			border-color: #1A76D1;
+			color: #1A76D1;
+		}
+		@media (max-width: 968px) {
+			.checkout-modal {
+				flex-direction: column;
+				height: 90vh;
+			}
+			.checkout-left {
+				display: none;
+			}
+			.checkout-right {
+				width: 100%;
+			}
+		}
+		</style>
+		
+		<!-- Professional Checkout Modal -->
+		<div class="checkout-modal-overlay" id="checkoutModalOverlay">
+			<div class="checkout-modal-container">
+				<div class="checkout-modal">
+					<div class="checkout-left">
+						<div class="checkout-header">
+							<h2>Secure Payment</h2>
+							<p>Complete your donation to Pakistan Medico International</p>
+						</div>
+						<div class="donation-summary-box">
+							<div class="summary-label">Your Donation Amount</div>
+							<div class="summary-amount" id="donationAmountDisplay">Select Amount</div>
+							<div class="summary-fund" id="donationFundDisplay">Funds clean water access</div>
+						</div>
+						<div class="security-info-box">
+							<div class="security-icon">
+								<i class="fa fa-shield" aria-hidden="true"></i>
+							</div>
+							<div class="security-content">
+								<div class="security-title">100% Secure Payment</div>
+								<div class="security-text">Your information is protected with 256-bit SSL encryption</div>
+							</div>
+						</div>
+					</div>
+					<div class="checkout-right">
+						<div class="checkout-form-header">
+							<h3>BILLING ADDRESS</h3>
+							<button type="button" class="checkout-close-btn" id="checkoutCloseBtn">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+						<form id="checkoutForm" class="checkout-form">
+							<div class="form-group">
+								<label class="form-label">Select Donation Amount *</label>
+								<div class="donation-amount-buttons">
+									<button type="button" class="amount-btn" data-amount="1000">PKR 1,000</button>
+									<button type="button" class="amount-btn" data-amount="5000">PKR 5,000</button>
+									<button type="button" class="amount-btn" data-amount="10000">PKR 10,000</button>
+									<button type="button" class="amount-btn" data-amount="20000">PKR 20,000</button>
+								</div>
+								<div style="display: flex; gap: 12px; align-items: center; margin-top: 12px;">
+									<input type="number" id="customAmount" name="customAmount" class="form-control" placeholder="Or enter custom amount" min="1" step="1" style="flex: 1;">
+									<span style="color: #666; font-size: 14px;">PKR</span>
+								</div>
+								<input type="hidden" id="donationAmount" name="donationAmount" value="">
+							</div>
+							<div class="form-group">
+								<label for="fullName" class="form-label">Full Name *</label>
+								<input type="text" id="fullName" name="fullName" class="form-control" placeholder="Enter your full name" required>
+							</div>
+							<div class="form-group">
+								<label for="email" class="form-label">Email Address *</label>
+								<input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+							</div>
+							<div class="form-group">
+								<label for="phone" class="form-label">Phone Number *</label>
+								<input type="tel" id="phone" name="phone" class="form-control" placeholder="Enter your phone" required>
+							</div>
+							<div class="form-group">
+								<label for="address" class="form-label">Address *</label>
+								<textarea id="address" name="address" class="form-control" rows="3" placeholder="Room - Street - Locality" required></textarea>
+							</div>
+							<div class="form-group">
+								<div class="payment-note" style="background: #e3f2fd; border: 1px solid #2196f3; border-radius: 8px; padding: 15px; margin: 20px 0; display: flex; align-items: center; gap: 10px;">
+									<i class="fa fa-lock" style="color: #2196f3; font-size: 20px;"></i>
+									<span style="color: #1565c0; font-size: 14px; line-height: 1.5;">
+										<strong>Secure Payment:</strong> You will be redirected to Meezan Bank's secure payment page to enter your card details and complete the transaction.
+									</span>
+								</div>
+							</div>
+							<div class="form-actions">
+								<button type="submit" class="btn-submit" id="checkoutSubmitBtn">Complete Payment</button>
+								<button type="button" class="btn-cancel" id="checkoutCancelBtn">Cancel</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
     </body>
 </html>
