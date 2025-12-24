@@ -47,71 +47,392 @@
 
 
     <style>
+        /* Sticky Header with Glassmorphism Effect */
+        .header {
+            position: relative;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .header.sticky .header-inner,
+        .header-inner.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header.sticky .topbar {
+            display: none;
+        }
+
+        /* Ensure dark text is visible on glass background */
+        .header-inner.sticky .nav li a,
+        .header.sticky .header-inner .nav li a {
+            color: #2C2D3F;
+        }
+
+        .header-inner.sticky .nav li a:hover,
+        .header.sticky .header-inner .nav li a:hover {
+            color: #1A76D1;
+        }
+
+        .header-inner.sticky .logo img,
+        .header.sticky .header-inner .logo img {
+            opacity: 1;
+        }
+
+        /* Modern Button Styles for Donate Now and View Bank List */
+        .get-quote .btn,
+        .get-quote a.btn,
+        #donateNowBtn,
+        a#donateNowBtn {
+            background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%) !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            padding: 12px 28px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            text-align: center !important;
+            display: inline-block !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            border: none !important;
+            box-shadow: 0 4px 15px rgba(26, 118, 209, 0.3) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            letter-spacing: 0.5px !important;
+            z-index: 1;
+        }
+
+        .get-quote .btn::before,
+        .get-quote a.btn::before,
+        #donateNowBtn::before,
+        a#donateNowBtn::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent) !important;
+            transition: left 0.6s ease !important;
+            z-index: -1;
+        }
+
+        .get-quote .btn:hover,
+        .get-quote a.btn:hover,
+        #donateNowBtn:hover,
+        a#donateNowBtn:hover {
+            background: linear-gradient(135deg, #0d47a1 0%, #1A76D1 100%) !important;
+            transform: translateY(-4px) scale(1.08) !important;
+            box-shadow: 0 10px 30px rgba(26, 118, 209, 0.5) !important;
+            cursor: pointer !important;
+            color: #ffffff !important;
+        }
+
+        .get-quote .btn:hover::before,
+        .get-quote a.btn:hover::before,
+        #donateNowBtn:hover::before,
+        a#donateNowBtn:hover::before {
+            left: 100% !important;
+        }
+
+        .get-quote .btn:active,
+        .get-quote a.btn:active,
+        #donateNowBtn:active,
+        a#donateNowBtn:active {
+            transform: translateY(-2px) scale(1.05) !important;
+            box-shadow: 0 6px 20px rgba(26, 118, 209, 0.4) !important;
+            cursor: pointer !important;
+        }
+
+        /* Enhanced card-button hover effects - Independent button hover */
+        .card-button i {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .card-button:hover i,
+        a.card-button:hover i,
+        #banklist.card-button:hover i,
+        #donateOnlineBtn.card-button:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Ensure button hover works independently of card hover */
+        .donation-card .card-button,
+        .donation-card a.card-button {
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Button hover should work even when card is not hovered */
+        .donation-card:not(:hover) .card-button:hover,
+        .donation-card:not(:hover) a.card-button:hover {
+            background: linear-gradient(135deg, #0d47a1 0%, #1A76D1 100%) !important;
+            transform: translateY(-5px) scale(1.08) !important;
+            box-shadow: 0 15px 40px rgba(26, 118, 209, 0.6) !important;
+            cursor: pointer !important;
+        }
+
+        .donation-card:not(:hover) .card-button:hover::before,
+        .donation-card:not(:hover) a.card-button:hover::before {
+            left: 100% !important;
+        }
+
+        /* Scroll detection script will be added */
+
         .donation-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 24px;
-            padding: 20px 20px 100px 20px;
+            gap: 30px;
+            padding: 40px 20px 100px 20px;
             max-width: 1200px;
             margin: 0 auto;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
 
         .donation-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 28px 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            border: 1px solid #838383;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 40px 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 8px 32px rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(-80px);
+            will-change: transform, opacity, box-shadow;
+            min-height: 320px;
+            border: 1px solid rgba(26, 118, 209, 0.08);
+        }
+
+        .donation-card:nth-child(even) {
+            transform: translateX(80px);
+        }
+
+        .donation-card.animate-in {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .donation-card.animate-out {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .donation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1A76D1 0%, #4CAF50 50%, #1A76D1 100%);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .donation-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .donation-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(26, 118, 209, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .donation-card:hover::after {
+            opacity: 1;
         }
 
         .donation-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(26, 118, 209, 0.2);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-color: rgba(26, 118, 209, 0.2);
         }
 
         .card-icon {
-            font-size: 36px;
-            margin-bottom: 20px;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 24px;
             text-align: center;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .card-icon svg {
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .donation-card:hover .card-icon {
+            transform: scale(1.15) rotate(8deg) translateY(-5px);
+            filter: drop-shadow(0 8px 16px rgba(26, 118, 209, 0.3));
         }
 
         .donation-card h2 {
-            margin: 0 0 12px 0;
+            margin: 0 0 20px 0;
             color: #1A76D1;
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 1.85rem;
+            font-weight: 700;
             text-align: center;
+            line-height: 1.4;
+            transition: all 0.5s ease;
+            width: 100%;
+            letter-spacing: -0.02em;
+        }
+
+        .donation-card:hover h2 {
+            color: #1565c0;
+            transform: translateY(-3px);
         }
 
         .donation-card p {
-            color: #000000;
-            line-height: 1.3em;
-            margin: 0 0 24px 0;
-            flex-grow: 1;
+            color: #666;
+            line-height: 1.7;
+            margin: 0 0 32px 0;
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
+            transition: color 0.5s ease;
+            width: 100%;
+            flex: 0 0 auto;
         }
 
-        .card-button {
-            display: inline-block;
-            background: #1A76D1;
+        .donation-card:hover p {
+            color: #444;
+        }
+
+        .card-button,
+        a.card-button,
+        #banklist.card-button,
+        #donateOnlineBtn.card-button {
+            display: inline-block !important;
+            background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%) !important;
             color: #ffffff !important;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-align: center;
-            transition: background 0.3s ease;
-            border: 1px solid #d0ddee;
+            text-decoration: none !important;
+            padding: 16px 32px !important;
+            border-radius: 12px !important;
+            font-weight: 600 !important;
+            text-align: center !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            border: none !important;
+            box-shadow: 0 6px 20px rgba(26, 118, 209, 0.3) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            font-size: 15px !important;
+            letter-spacing: 0.5px !important;
+            margin: 0 auto !important;
+            width: auto !important;
+            z-index: 10;
         }
 
+        .card-button::before,
+        a.card-button::before,
+        #banklist.card-button::before,
+        #donateOnlineBtn.card-button::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent) !important;
+            transition: left 0.6s ease !important;
+            z-index: -1;
+        }
 
-        .card-button:hover {
-            background: #ac0202;
+        .card-button:hover,
+        a.card-button:hover,
+        #banklist.card-button:hover,
+        #donateOnlineBtn.card-button:hover,
+        .donation-card .card-button:hover,
+        .donation-card:hover .card-button:hover {
+            background: linear-gradient(135deg, #0d47a1 0%, #1A76D1 100%) !important;
+            transform: translateY(-5px) scale(1.08) !important;
+            box-shadow: 0 15px 40px rgba(26, 118, 209, 0.6) !important;
+            cursor: pointer !important;
+            color: #ffffff !important;
+        }
+
+        .card-button:hover::before,
+        a.card-button:hover::before,
+        #banklist.card-button:hover::before,
+        #donateOnlineBtn.card-button:hover::before,
+        .donation-card .card-button:hover::before,
+        .donation-card:hover .card-button:hover::before {
+            left: 100% !important;
+        }
+
+        .card-button:active,
+        a.card-button:active,
+        #banklist.card-button:active,
+        #donateOnlineBtn.card-button:active {
+            transform: translateY(-2px) scale(1.05) !important;
+            box-shadow: 0 8px 25px rgba(26, 118, 209, 0.4) !important;
+            cursor: pointer !important;
         }
 
 
@@ -141,13 +462,15 @@
 
 
         /* Modal styles */
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -163,258 +486,150 @@
         }
 
         .modal {
-            background-color: white;
-            border-radius: 12px;
+            background-color: #ffffff;
+            border-radius: 16px;
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transform: translateY(20px);
-            transition: transform 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             display: block !important;
             margin: auto;
         }
 
         .modal-overlay.active .modal {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .modal-header {
-            background: #1A76D1;
+            background: linear-gradient(135deg, #1A76D1 0%, #1565C0 100%);
             color: white;
-            padding: 20px 30px;
+            padding: 24px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 10;
+            border-radius: 16px 16px 0 0;
         }
 
         .modal-title {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 1.75rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .modal-title i {
-            font-size: 1.6rem;
+        .modal-title .icon-svg {
+            width: 28px;
+            height: 28px;
+            stroke: white;
         }
 
         .close-btn {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
-            font-size: 1.8rem;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s ease;
             width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+            padding: 0;
         }
 
         .close-btn:hover {
-            transform: scale(1.1);
-            background-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .close-btn svg {
+            stroke: white;
         }
 
         .modal-body {
-            padding: 30px;
+            padding: 32px;
             text-align: left;
-        }
-
-        .bank-section {
-            margin-bottom: 40px;
-            padding-bottom: 30px;
-            border-bottom: 2px dashed #e0e0e0;
-        }
-
-        .bank-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .bank-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            gap: 15px;
-        }
-
-        .bank-logo-circle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 70px;
-            height: 70px;
-            background: #1A76D1;
-            border-radius: 50%;
-            color: white;
-            font-size: 2rem;
-            box-shadow: 0 4px 10px rgba(26, 95, 122, 0.3);
-            flex-shrink: 0;
-        }
-
-        .bank-header-text h2 {
-            color: #1A76D1;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .bank-header-text p {
-            color: #666;
-            font-size: 1rem;
-        }
-
-        .bank-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .bank-item {
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            border-left: 4px solid #1A76D1;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .bank-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .bank-label {
-            font-weight: 600;
-            color: #1A76D1;
-            margin-bottom: 8px;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bank-label i {
-            font-size: 1.1rem;
-        }
-
-        .bank-value {
-            font-size: 1.1rem;
-            color: #333;
-            word-break: break-all;
-            line-height: 1.4;
-        }
-
-        .bank-value.iban,
-        .bank-value.swift {
-            font-family: monospace;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .account-title {
-            background-color: #e8f4fc;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            border-left: 4px solid #1A76D1;
-        }
-
-        .account-title h3 {
-            color: #1A76D1;
-            margin-bottom: 8px;
-            font-size: 1.3rem;
-        }
-
-        .account-title p {
-            color: #333;
-            font-size: 1.1rem;
-            line-height: 1.4;
-        }
-
-        .currency-accounts {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .currency-account {
-            flex: 1;
-            min-width: 200px;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border-radius: 8px;
-            border: 1px solid #d1e7ff;
-        }
-
-        .currency-label {
-            font-weight: 600;
-            color: #1A76D1;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .currency-value {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .instructions {
-            margin-top: 25px;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            color: #555;
-            border-left: 4px solid #1A76D1;
-        }
-
-        .instructions p {
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: #f8f9fa;
         }
 
         .tab-buttons {
             display: flex;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 28px;
+            background: white;
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 8px 32px rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
         }
 
         .tab-btn {
-            padding: 12px 25px;
-            background: none;
-            border: none;
-            font-size: 1.1rem;
+            flex: 1;
+            padding: 14px 24px;
+            background: transparent;
+            border: none !important;
+            outline: none !important;
+            font-size: 1rem;
             font-weight: 600;
             color: #666;
             cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-btn svg {
+            stroke: currentColor;
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .bank-logo-tab {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        .bank-logo-header {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .tab-btn.active {
             color: #1A76D1;
-            border-bottom: 3px solid #1A76D1;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            box-shadow: 0 4px 12px rgba(26, 118, 209, 0.25) !important;
+            transform: translateY(-2px);
+            border: none !important;
+            outline: none !important;
         }
 
         .tab-btn:hover:not(.active) {
             color: #1A76D1;
-            background-color: #f8f9fa;
+            background: #f5f5f5;
+            transform: translateY(-1px);
+        }
+
+        .tab-btn:hover img,
+        .tab-btn:hover svg {
+            transform: scale(1.1);
         }
 
         .tab-content {
@@ -425,46 +640,356 @@
             display: block;
         }
 
+        .bank-section {
+            position: relative;
+        }
+
+        .bank-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .bank-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+            gap: 16px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #e8f4fc;
+        }
+
+        .bank-logo-circle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 72px;
+            background: transparent;
+            border-radius: 0;
+            color: white;
+            box-shadow: none;
+            flex-shrink: 0;
+            padding: 0;
+        }
+
+        .bank-logo-circle.habib-gradient {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .bank-logo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .bank-header-text {
+            flex: 1;
+        }
+
+        .bank-header-text h2 {
+            color: #1A76D1;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .bank-header-text p {
+            color: #666;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .copy-all-btn {
+            background: linear-gradient(135deg, #1A76D1 0%, #1565C0 100%);
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(26, 118, 209, 0.3);
+        }
+
+        .copy-all-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(26, 118, 209, 0.4);
+        }
+
+        .copy-all-btn svg {
+            stroke: white;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Form-like Styles */
+        .account-title-form {
+            margin-bottom: 28px;
+        }
+
+        .bank-details-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #1A76D1;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .form-label svg {
+            stroke: #1A76D1;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .form-field-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border: none !important;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-field-wrapper:hover {
+            background: #ffffff;
+        }
+
+        .form-field-wrapper:focus-within {
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(26, 118, 209, 0.1);
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 14px 16px;
+            border: none !important;
+            background: transparent;
+            font-size: 1rem;
+            color: #333;
+            font-weight: 500;
+            outline: none;
+            border-radius: 12px;
+        }
+
+        .form-input:focus {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        textarea {
+            border: none !important;
+            outline: none !important;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Custom Scrollbar - Theme Colored and Thinner */
+        .modal {
+            scrollbar-width: thin;
+            scrollbar-color: #1A76D1 #f1f1f1;
+        }
+
+        .modal::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #1A76D1 0%, #1565C0 100%);
+            border-radius: 10px;
+        }
+
+        .modal::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #1565C0 0%, #0d47a1 100%);
+        }
+
+        .form-input-iban,
+        .form-input-swift {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.2s ease;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .copy-btn:hover {
+            background: #e3f2fd;
+            color: #1A76D1;
+        }
+
+        .copy-btn.copied {
+            color: #4caf50;
+        }
+
+        .copy-btn .copy-icon,
+        .copy-btn .check-icon {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        .copy-btn .check-icon {
+            display: none;
+        }
+
+        .copy-btn.copied .copy-icon {
+            display: none;
+        }
+
+        .copy-btn.copied .check-icon {
+            display: block;
+        }
+
+        .instructions {
+            margin-top: 32px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: #1565C0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            border-left: 4px solid #1A76D1;
+        }
+
+        .instructions svg {
+            stroke: #1A76D1;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .instructions p {
+            margin: 0 0 8px 0;
+            line-height: 1.6;
+        }
+
+        .instructions p:last-child {
+            margin-bottom: 0;
+        }
+
+        .instructions strong {
+            color: #0d47a1;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
             }
 
-            .bank-details {
-                grid-template-columns: 1fr;
+            .modal {
+                width: 95%;
+                max-width: 95%;
+                border-radius: 12px;
             }
 
             .modal-body {
-                padding: 20px;
+                padding: 24px;
             }
 
             .modal-header {
-                padding: 15px 20px;
-            }
-
-            .bank-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-
-            .tab-buttons {
-                flex-direction: column;
-            }
-
-            .tab-btn {
-                text-align: left;
-                border-bottom: 1px solid #e0e0e0;
-            }
-
-            .tab-btn.active {
-                border-bottom: 3px solid #1a5f7a;
+                padding: 20px 24px;
             }
 
             .modal-title {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
             }
 
+            .bank-section {
+                padding: 24px;
+            }
+
+            .bank-header {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .bank-header-text h2 {
+                font-size: 1.5rem;
+            }
+
+            .copy-all-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .tab-buttons {
+                flex-direction: row;
+                padding: 4px;
+            }
+
+            .tab-btn {
+                padding: 12px 16px;
+                font-size: 0.95rem;
+            }
+
+            .form-field-wrapper {
+                flex-direction: row;
+            }
+
+            .form-input {
+                font-size: 0.95rem;
+                padding: 12px 14px;
+            }
+
+            .copy-btn {
+                padding: 10px 14px;
+            }
+
+            .instructions {
+                padding: 16px;
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -478,11 +1003,94 @@
             }
 
             .modal {
-                width: 95%;
+                width: 98%;
+                max-width: 98%;
+                border-radius: 12px;
             }
 
-            .currency-accounts {
+            .modal-header {
+                padding: 16px 20px;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+
+            .modal-title .icon-svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .bank-section {
+                padding: 20px;
+            }
+
+            .bank-header {
                 flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+
+            .bank-logo-circle {
+                width: 60px;
+                height: 60px;
+            }
+
+            .bank-header-text h2 {
+                font-size: 1.3rem;
+            }
+
+            .copy-all-btn {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .tab-btn {
+                width: 100%;
+                padding: 14px;
+            }
+
+            .form-label {
+                font-size: 0.9rem;
+            }
+
+            .form-input {
+                font-size: 0.9rem;
+                padding: 12px;
+            }
+
+            .form-input-iban,
+            .form-input-swift {
+                font-size: 0.85rem;
+            }
+
+            .copy-btn {
+                padding: 10px 12px;
+            }
+
+            .copy-btn .copy-icon,
+            .copy-btn .check-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .instructions {
+                padding: 14px;
+                font-size: 0.85rem;
+                flex-direction: column;
+                gap: 8px;
             }
         }
 
@@ -490,8 +1098,64 @@
         @media (max-width: 768px) {
             .donation-grid {
                 grid-template-columns: 1fr;
-                padding: 16px;
+                padding: 20px 16px;
+                gap: 24px;
+            }
+
+            .donation-card {
+                padding: 32px 24px;
+                transform: translateY(50px);
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                min-height: 280px;
+            }
+
+            .donation-card:nth-child(even) {
+                transform: translateY(50px);
+            }
+
+            .donation-card.animate-in {
+                transform: translateY(0);
+                transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .donation-card.animate-out {
+                transform: translateY(30px);
+            }
+
+            .donation-card:hover {
+                transform: translateY(-8px) scale(1.02);
+                transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .card-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .donation-card h2 {
+                font-size: 1.5rem;
+            }
+
+            .donation-card p {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .donation-grid {
+                padding: 16px 12px;
                 gap: 20px;
+            }
+
+            .donation-card {
+                padding: 24px 20px;
+            }
+
+            .card-button {
+                padding: 12px 20px;
+                font-size: 14px;
             }
         }
 
@@ -727,8 +1391,10 @@
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
             padding: 20px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
 
         .checkout-modal-overlay.active {
@@ -738,30 +1404,63 @@
 
         .checkout-modal-container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1200px;
             max-height: 90vh;
-            overflow: auto;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .checkout-modal-overlay.active .checkout-modal-container {
+            transform: translateX(0);
         }
 
         .checkout-modal {
             background: #ffffff;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: row;
-            min-height: 600px;
+            height: 85vh;
+            max-height: 900px;
+            min-height: 650px;
         }
 
-        /* Left Side - Donation Details */
+        /* Left Side - Donation Details (Sticky & Full Height) */
         .checkout-left {
             background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
             color: #ffffff;
-            padding: 40px;
-            width: 40%;
+            padding: 50px 40px;
+            width: 42%;
+            min-width: 380px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: sticky;
+            top: 0;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Custom scrollbar for left section */
+        .checkout-left::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .checkout-left::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .checkout-left::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .checkout-left::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .checkout-header h2 {
@@ -781,25 +1480,58 @@
         .donation-summary-box {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 30px;
+            border-radius: 16px;
+            padding: 40px 30px;
             margin: 30px 0;
             text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
         }
 
         .summary-label {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 10px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
         .summary-amount {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 700;
             color: #ffffff;
-            margin: 10px 0;
+            margin: 15px 0;
+            line-height: 1.1;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            position: relative;
+            transition: font-size 0.2s ease;
+        }
+
+        /* Responsive font sizing for very long numbers */
+        .summary-amount[data-length="short"] {
+            font-size: 42px;
+        }
+
+        .summary-amount[data-length="medium"] {
+            font-size: 36px;
+        }
+
+        .summary-amount[data-length="long"] {
+            font-size: 30px;
         }
 
         .summary-fund {
@@ -841,57 +1573,114 @@
             line-height: 1.4;
         }
 
-        /* Right Side - Billing Form */
+        /* Right Side - Billing Form (Scrollable) */
         .checkout-right {
-            width: 60%;
+            width: 58%;
             padding: 0;
             display: flex;
             flex-direction: column;
             background: #ffffff;
+            overflow: hidden;
         }
 
         .checkout-form-header {
-            padding: 30px 40px 20px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 35px 45px 25px;
+            border-bottom: 1px solid #e8e8e8;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
         }
 
         .checkout-form-header h3 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             color: #1A76D1;
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
         }
 
         .checkout-close-btn {
             background: transparent;
             border: none;
-            font-size: 24px;
+            font-size: 22px;
             color: #666;
             cursor: pointer;
-            padding: 5px;
-            width: 35px;
-            height: 35px;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .checkout-close-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: #f5f5f5;
+            transform: scale(0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .checkout-close-btn:hover::before {
+            transform: scale(1);
         }
 
         .checkout-close-btn:hover {
-            background: #f5f5f5;
-            color: #333;
+            color: #1A76D1;
+            transform: rotate(90deg);
+        }
+
+        .checkout-close-btn:active {
+            transform: rotate(90deg) scale(0.95);
         }
 
         .checkout-form {
-            padding: 30px 40px 40px;
+            padding: 35px 45px 45px;
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Custom Thin Scrollbar for Right Section (Primary Color Theme) */
+        .checkout-form::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .checkout-form::-webkit-scrollbar-track {
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .checkout-form::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .checkout-form::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+        }
+
+        /* Firefox scrollbar */
+        .checkout-form {
+            scrollbar-width: thin;
+            scrollbar-color: #1A76D1 #f5f5f5;
         }
 
         .checkout-form .form-group {
@@ -908,18 +1697,26 @@
 
         .checkout-form .form-control {
             width: 100%;
-            padding: 12px 16px;
+            padding: 14px 18px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 15px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: inherit;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .checkout-form .form-control:hover {
+            border-color: #b0bec5;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
 
         .checkout-form .form-control:focus {
             outline: none;
             border-color: #1A76D1;
-            box-shadow: 0 0 0 3px rgba(26, 118, 209, 0.1);
+            box-shadow: 0 0 0 4px rgba(26, 118, 209, 0.1), 0 4px 12px rgba(26, 118, 209, 0.15);
+            transform: translateY(-1px);
         }
 
         .checkout-form .form-control.error {
@@ -942,7 +1739,24 @@
 
         .checkout-form textarea.form-control {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
+            font-family: inherit;
+            line-height: 1.5;
+        }
+
+        .checkout-form select.form-control {
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231A76D1' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 45px;
+        }
+
+        .checkout-form select.form-control:hover {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231565c0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
         }
 
         .field-error {
@@ -960,43 +1774,75 @@
 
         .btn-submit {
             flex: 1;
-            padding: 14px 24px;
-            background: #1A76D1;
+            padding: 16px 28px;
+            background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
             color: #ffffff;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(26, 118, 209, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
         }
 
         .btn-submit:hover:not(:disabled) {
-            background: #1565c0;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(26, 118, 209, 0.3);
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(26, 118, 209, 0.4);
+        }
+
+        .btn-submit:active:not(:disabled) {
+            transform: translateY(-1px) scale(1);
         }
 
         .btn-submit:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
 
         .btn-cancel {
-            padding: 14px 24px;
-            background: #f5f5f5;
-            color: #333;
+            padding: 16px 28px;
+            background: #ffffff;
+            color: #666;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
 
         .btn-cancel:hover {
-            background: #e8e8e8;
-            border-color: #b0b0b0;
+            background: #f8f8f8;
+            border-color: #1A76D1;
+            color: #1A76D1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-cancel:active {
+            transform: translateY(0);
         }
 
         .checkout-message {
@@ -1025,25 +1871,76 @@
             border: 1px solid #2196f3;
         }
 
+        /* Professional Hover Effects for Security Box */
+        .security-info-box {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+        }
+
+        .security-info-box:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .security-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .security-info-box:hover .security-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .donation-summary-box {
+            transition: all 0.3s ease;
+        }
+
+        .donation-summary-box:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
         /* Responsive Design */
-        @media (max-width: 968px) {
+        @media (max-width: 1024px) {
             .checkout-modal {
-                flex-direction: column;
-                max-height: 90vh;
+                height: 90vh;
             }
 
             .checkout-left {
-                width: 100%;
-                padding: 30px;
+                width: 38%;
+                min-width: 340px;
+                padding: 40px 30px;
+            }
+
+            .checkout-right {
+                width: 62%;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .checkout-modal-container {
+                max-width: 95%;
+            }
+
+            .checkout-modal {
+                flex-direction: column;
+                height: 90vh;
+                max-height: none;
+            }
+
+            .checkout-left {
+                display: none;
+                /* Hide left section on mobile */
             }
 
             .checkout-right {
                 width: 100%;
+                height: 100%;
             }
 
             .checkout-form-header,
             .checkout-form {
-                padding: 20px 30px;
+                padding: 25px 30px;
             }
 
             .checkout-form .form-row {
@@ -1055,27 +1952,51 @@
         @media (max-width: 576px) {
             .checkout-modal-container {
                 padding: 10px;
+                max-width: 100%;
+            }
+
+            .checkout-modal {
+                border-radius: 16px;
+                height: 95vh;
             }
 
             .checkout-left {
-                padding: 20px;
-            }
-
-            .checkout-header h2 {
-                font-size: 24px;
+                display: none;
+                /* Hide left section on mobile */
             }
 
             .summary-amount {
-                font-size: 36px;
+                font-size: 28px;
+                height: 55px;
             }
 
-            .checkout-form-header,
+            .summary-amount[data-length="short"] {
+                font-size: 28px;
+            }
+
+            .summary-amount[data-length="medium"] {
+                font-size: 24px;
+            }
+
+            .summary-amount[data-length="long"] {
+                font-size: 20px;
+            }
+
+            .checkout-form-header {
+                padding: 20px;
+            }
+
+            .checkout-form-header h3 {
+                font-size: 18px;
+            }
+
             .checkout-form {
                 padding: 20px;
             }
 
             .form-actions {
                 flex-direction: column;
+                gap: 12px;
             }
 
             .btn-submit,
@@ -1091,28 +2012,58 @@
 
         .amount-btn {
             padding: 14px 20px;
-            background: #f5f5f5;
+            background: #ffffff;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             color: #333;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .amount-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(26, 118, 209, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            z-index: 0;
+        }
+
+        .amount-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .amount-btn span {
+            position: relative;
+            z-index: 1;
         }
 
         .amount-btn:hover {
             background: #e8f4fc;
             border-color: #1A76D1;
             color: #1A76D1;
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(26, 118, 209, 0.2);
         }
 
         .amount-btn.active {
-            background: #1A76D1;
+            background: linear-gradient(135deg, #1A76D1 0%, #1565c0 100%);
             border-color: #1A76D1;
             color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(26, 118, 209, 0.3);
             box-shadow: 0 4px 12px rgba(26, 118, 209, 0.3);
         }
 
@@ -1124,6 +2075,105 @@
             .donation-amount-buttons {
                 grid-template-columns: 1fr !important;
             }
+        }
+
+        /* Banner GIF Styles */
+        .banner-gif-section {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            padding: 20px 0;
+        }
+
+        .banner-gif-section .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .banner-gif {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            max-height: 600px;
+        }
+
+        @media (max-width: 768px) {
+            .banner-gif {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner-gif {
+                max-height: 250px;
+            }
+        }
+
+        /* Add top padding to schedule section */
+        .schedule {
+            padding-top: 80px !important;
+        }
+
+        @media (max-width: 768px) {
+            .schedule {
+                padding-top: 60px !important;
+            }
+        }
+
+        /* Make schedule cards same height */
+        .schedule-inner .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .schedule-inner .row > [class*="col-"] {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .single-schedule {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .single-schedule.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .single-schedule .inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .single-schedule .single-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Stagger animation delay for each card */
+        .single-schedule.first.animate-in {
+            transition-delay: 0.1s;
+        }
+
+        .single-schedule.middle.animate-in {
+            transition-delay: 0.2s;
+        }
+
+        .single-schedule.last.animate-in {
+            transition-delay: 0.3s;
         }
     </style>
 
@@ -1224,93 +2274,13 @@
     </header>
     <!-- End Header Area -->
 
-    <!-- Slider Area -->
-    <section class="slider">
-        <div class="hero-slider">
-            <!-- Start Single Slider -->
-            <div class="single-slider" style="background-image:url('img/ather-1.jpeg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <!-- <div class="text">
-								<h1>PMI Provide <span>Medical</span> Services That You Can <span>Trust!</span></h1>
-								<p>Pakistan Medico Health Centre, Orangi Township, Karachi was conceived by us more or
-									less at the time of
-									the foundation of our organization. However we conducted a health survey of 2020.
-									Subsequently, a
-									8
-
-									questionnaire was designed to survey the health pattern knowledge of adults and
-									children. Thus the Health
-									Centre was designed accordingly. Orangi Township has a population of 2500,000. This
-									was the only proper
-									health centre in the area. This Township is spread over roughly on 42 sqr miles. The
-									Health Centre today
-									consists of curative, preventive, educational and general advisory services. </p>
-								<div class="button">
-
-									<a href="#" class="btn primary">Learn More</a>
-								</div>
-							</div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Single Slider -->
-            <!-- Start Single Slider -->
-            <div class="single-slider" style="background-image:url('img/ather-2.jpeg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <!-- <div class="text">
-								<h1>PMI Provide <span>Education</span> Services That You Can <span>Trust!</span></h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl
-									pellentesque, faucibus libero eu, gravida quam. </p>
-								<div class="button">
-
-									<a href="#" class="btn primary">Learn More</a>
-								</div>
-							</div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Start End Slider -->
-            <!-- Start Single Slider -->
-            <div class="single-slider" style="background-image:url('img/ather-3.jpeg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <!-- <div class="text">
-								<h1>PMI Provide <span>Old Age Home</span> Services That You Can <span>Trust!</span></h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed nisl
-									pellentesque, faucibus libero eu, gravida quam. </p>
-								<div class="button">
-
-									<a href="#" class="btn primary">Learn More</a>
-								</div>
-							</div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- 4th slider -->
-
-            <div class="single-slider" style="background-image:url('img/ather-4.jpeg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <div class="text">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Single Slider -->
+    <!-- Banner GIF Area -->
+    <section class="banner-gif-section">
+        <div class="container">
+            <img src="assets/banner_video.gif" alt="Pakistan Medico International Banner" class="banner-gif">
         </div>
     </section>
-    <!--/ End Slider Area -->
+    <!--/ End Banner GIF Area -->
 
     <!-- Start Schedule Area -->
 
@@ -1385,21 +2355,66 @@
 
     <div class="donation-grid">
         <div class="donation-card">
-            <div class="card-icon">🏦</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="bankGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#1A76D1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#1565c0;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="4" y="12" width="56" height="40" rx="4" fill="url(#bankGrad)" opacity="0.1" />
+                    <rect x="8" y="20" width="48" height="32" rx="2" fill="url(#bankGrad)" />
+                    <rect x="12" y="28" width="40" height="4" rx="1" fill="#fff" />
+                    <rect x="12" y="36" width="32" height="4" rx="1" fill="#fff" opacity="0.8" />
+                    <rect x="12" y="44" width="28" height="4" rx="1" fill="#fff" opacity="0.6" />
+                    <circle cx="48" cy="28" r="6" fill="#fff" opacity="0.3" />
+                </svg>
+            </div>
             <h2>Bank Transfer</h2>
             <p>Deposit your donations directly via an online funds transfer or through any bank in Pakistan</p>
             <a id="banklist" class="card-button">VIEW BANK LIST</a>
         </div>
 
         <div class="donation-card">
-            <div class="card-icon">💳</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="6" y="14" width="52" height="36" rx="6" fill="url(#cardGrad)" />
+                    <rect x="12" y="22" width="40" height="6" rx="2" fill="#fff" opacity="0.9" />
+                    <rect x="12" y="32" width="32" height="4" rx="2" fill="#fff" opacity="0.7" />
+                    <rect x="12" y="40" width="24" height="4" rx="2" fill="#fff" opacity="0.7" />
+                    <circle cx="48" cy="38" r="8" fill="#fff" opacity="0.3" />
+                    <circle cx="52" cy="34" r="4" fill="#fff" opacity="0.5" />
+                </svg>
+            </div>
             <h2>Donate Online</h2>
             <p>Click below to make donations directly with any Visa/MasterCard through the Online Payment Gateway</p>
             <a id="donateOnlineBtn" class="card-button">DONATE ONLINE</a>
         </div>
 
         <div class="donation-card">
-            <div class="card-icon">📍</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="locationGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#E63946;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M32 8C20.95 8 12 16.95 12 28c0 14 18 28 18 28s18-14 18-28c0-11.05-8.95-20-20-20z"
+                        fill="url(#locationGrad)" opacity="0.2" />
+                    <path d="M32 8C20.95 8 12 16.95 12 28c0 14 18 28 18 28s18-14 18-28c0-11.05-8.95-20-20-20z"
+                        fill="url(#locationGrad)" />
+                    <circle cx="32" cy="28" r="8" fill="#fff" />
+                    <circle cx="32" cy="28" r="4" fill="url(#locationGrad)" />
+                </svg>
+            </div>
             <h2>Collection Centers</h2>
             <p>Visit our collection centers in Karachi, Lahore & Hyderabad. Find the nearest center now, at Collection
                 Centers</p>
@@ -1407,28 +2422,79 @@
         </div>
 
         <div class="donation-card">
-            <div class="card-icon">📱</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="smsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#9C27B0;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#7B1FA2;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M8 12h48c2.21 0 4 1.79 4 4v32c0 2.21-1.79 4-4 4H20l-12 12V16c0-2.21 1.79-4 4-4z"
+                        fill="url(#smsGrad)" />
+                    <circle cx="22" cy="32" r="3" fill="#fff" opacity="0.9" />
+                    <circle cx="32" cy="32" r="3" fill="#fff" opacity="0.9" />
+                    <circle cx="42" cy="32" r="3" fill="#fff" opacity="0.9" />
+                    <rect x="16" y="40" width="32" height="4" rx="2" fill="#fff" opacity="0.7" />
+                </svg>
+            </div>
             <h2>Donate Via SMS</h2>
             <p>Type "DONATE" and send an SMS to 9880 (Charges: Rs. 20+ Tax)</p>
             <!-- <a href="#" class="card-button">SEND SMS</a> -->
         </div>
 
         <div class="donation-card">
-            <div class="card-icon">📱</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="mobileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#F57C00;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="18" y="6" width="28" height="52" rx="6" fill="url(#mobileGrad)" />
+                    <rect x="22" y="14" width="20" height="32" rx="2" fill="#fff" />
+                    <rect x="26" y="20" width="12" height="2" rx="1" fill="url(#mobileGrad)" opacity="0.5" />
+                    <rect x="26" y="26" width="12" height="2" rx="1" fill="url(#mobileGrad)" opacity="0.5" />
+                    <rect x="26" y="32" width="8" height="2" rx="1" fill="url(#mobileGrad)" opacity="0.5" />
+                    <circle cx="32" cy="50" r="3" fill="#fff" opacity="0.8" />
+                </svg>
+            </div>
             <h2>Bank App</h2>
             <p>Contribute to Indus Hospital & Health Network through your bank's mobile app</p>
             <!-- <a href="#" class="card-button">USE BANK APP</a> -->
         </div>
 
         <div class="donation-card">
-            <div class="card-icon">🛒</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="cartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00BCD4;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#0097A7;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M8 12h8l4 20h32l4-16H16" fill="none" stroke="url(#cartGrad)" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="20" cy="50" r="6" fill="url(#cartGrad)" />
+                    <circle cx="52" cy="50" r="6" fill="url(#cartGrad)" />
+                    <rect x="12" y="20" width="6" height="8" rx="1" fill="url(#cartGrad)" opacity="0.6" />
+                    <rect x="20" y="20" width="6" height="8" rx="1" fill="url(#cartGrad)" opacity="0.6" />
+                    <rect x="28" y="20" width="6" height="8" rx="1" fill="url(#cartGrad)" opacity="0.6" />
+                </svg>
+            </div>
             <h2>Daraz</h2>
             <p>Visit the Daraz website to make an online contribution to Indus Hospital & Health Network</p>
             <!-- <a href="#" class="card-button">VISIT DARAZ</a> -->
         </div>
 
         <div class="donation-card">
-            <div class="card-icon">🛒</div>
+            <div class="card-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                    <path fill="#f78200"
+                        d="M64 160C64 124.7 92.7 96 128 96L416 96C451.3 96 480 124.7 480 160L480 192L530.7 192C547.7 192 564 198.7 576 210.7L621.3 256C633.3 268 640 284.3 640 301.3L640 448C640 483.3 611.3 512 576 512L572.7 512C562.3 548.9 528.3 576 488 576C447.7 576 413.8 548.9 403.3 512L300.7 512C290.3 548.9 256.3 576 216 576C175.7 576 141.8 548.9 131.3 512L128 512C92.7 512 64 483.3 64 448L64 400L24 400C10.7 400 0 389.3 0 376C0 362.7 10.7 352 24 352L136 352C149.3 352 160 341.3 160 328C160 314.7 149.3 304 136 304L24 304C10.7 304 0 293.3 0 280C0 266.7 10.7 256 24 256L200 256C213.3 256 224 245.3 224 232C224 218.7 213.3 208 200 208L24 208C10.7 208 0 197.3 0 184C0 170.7 10.7 160 24 160L64 160zM576 352L576 301.3L530.7 256L480 256L480 352L576 352zM256 488C256 465.9 238.1 448 216 448C193.9 448 176 465.9 176 488C176 510.1 193.9 528 216 528C238.1 528 256 510.1 256 488zM488 528C510.1 528 528 510.1 528 488C528 465.9 510.1 448 488 448C465.9 448 448 465.9 448 488C448 510.1 465.9 528 488 528z" />
+                </svg>
+            </div>
             <h2>Door Step Collection</h2>
             <p>Karachi: 021 111 111 880<br>
                 Lahore: 042 111 111 880<br>
@@ -1439,7 +2505,22 @@
 
 
         <div class="donation-card">
-            <div class="card-icon">📱</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="walletGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#673AB7;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#512DA8;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="10" y="18" width="44" height="28" rx="4" fill="url(#walletGrad)" />
+                    <rect x="14" y="22" width="36" height="20" rx="2" fill="#fff" opacity="0.95" />
+                    <rect x="18" y="28" width="28" height="4" rx="1" fill="url(#walletGrad)" opacity="0.4" />
+                    <rect x="18" y="36" width="20" height="4" rx="1" fill="url(#walletGrad)" opacity="0.4" />
+                    <circle cx="44" cy="30" r="6" fill="url(#walletGrad)" />
+                    <circle cx="44" cy="30" r="3" fill="#fff" />
+                </svg>
+            </div>
             <h2>Mobile Wallet</h2>
             <p>Use your JazzCash, EasyPaisa or UPaisa mobile accounts to contribute to Indus Hospital & Health Network
             </p>
@@ -1448,7 +2529,22 @@
 
 
         <div class="donation-card">
-            <div class="card-icon">🛒</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#009688;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00796B;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M32 8L12 18v24l20 10 20-10V18L32 8z" fill="url(#boxGrad)" />
+                    <path d="M32 8v44l20-10V18L32 8z" fill="url(#boxGrad)" opacity="0.7" />
+                    <rect x="24" y="28" width="16" height="16" rx="2" fill="#fff" opacity="0.2" />
+                    <circle cx="32" cy="36" r="4" fill="#fff" opacity="0.8" />
+                    <path d="M28 38l3 3 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
             <h2>Donation Box</h2>
             <p>Obtain a Donation Box for IHHN to place at your retail outlet. Call us at<br>
                 Karachi: 021 111 111 880<br>
@@ -1480,17 +2576,29 @@
         <div class="modal">
             <div class="modal-header">
                 <div class="modal-title">
-                    <i class="fas fa-university"></i> Bank Account Details
+                    <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Bank Account Details
                 </div>
-                <button class="close-btn" id="closeModal">
-                    <i class="fas fa-times"></i>
+                <button class="close-btn" id="closeModal" aria-label="Close modal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </button>
             </div>
 
             <div class="modal-body">
                 <div class="tab-buttons">
-                    <button class="tab-btn active" data-tab="meezan">Meezan Bank</button>
-                    <button class="tab-btn" data-tab="habib">Habib Metro Bank</button>
+                    <button class="tab-btn active" data-tab="meezan">
+                        <img src="assets/meezan-bank-logo.png" alt="Meezan Bank" class="bank-logo-tab">
+                        Meezan Bank
+                    </button>
+                    <button class="tab-btn" data-tab="habib">
+                        <img src="assets/habib_metro.svg" alt="Habib Metro Bank" class="bank-logo-tab">
+                        Habib Metro Bank
+                    </button>
                 </div>
 
                 <!-- Meezan Bank Section -->
@@ -1498,67 +2606,143 @@
                     <div class="bank-section">
                         <div class="bank-header">
                             <div class="bank-logo-circle">
-                                <i class="fas fa-landmark"></i>
+                                <img src="assets/meezan-bank-logo.png" alt="Meezan Bank" class="bank-logo-header">
                             </div>
                             <div class="bank-header-text">
                                 <h2>Meezan Bank Limited</h2>
                                 <p>Tooba Masjid Branch, Karachi</p>
                             </div>
+                            <button class="copy-all-btn" data-bank="meezan" title="Copy all bank details">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
                         </div>
 
-                        <div class="account-title">
-                            <h3>Account Title</h3>
-                            <p>PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION</p>
+                        <div class="account-title-form">
+                            <label class="form-label">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Account Title
+                            </label>
+                            <div class="form-field-wrapper">
+                                <input type="text" class="form-input" value="PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION" readonly>
+                            </div>
                         </div>
 
-                        <div class="bank-details">
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-building"></i> Bank Name
+                        <div class="bank-details-form">
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Bank Name
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="MEEZAN BANK LIMITED" readonly>
                                 </div>
-                                <div class="bank-value">MEEZAN BANK LIMITED</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-code-branch"></i> Branch Code
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Code
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="1020" readonly>
                                 </div>
-                                <div class="bank-value">1020</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-map-marker-alt"></i> Branch Name
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Name
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="TOOBA MASJID BRANCH" readonly>
                                 </div>
-                                <div class="bank-value">TOOBA MASJID BRANCH</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-map-pin"></i> Branch Address
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Address
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="PLOT NO 10-D, A COMMERCIAL MARKET DHA PHASE II KARACHI" readonly>
                                 </div>
-                                <div class="bank-value">PLOT NO 10-D, A COMMERCIAL MARKET DHA PHASE II KARACHI</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-id-card"></i> Account No
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Account No
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="1020-0113583984" readonly>
                                 </div>
-                                <div class="bank-value">1020-0113583984</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-credit-card"></i> IBAN
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="1" y1="10" x2="23" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    IBAN
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input form-input-iban" value="PK06MEZN0010200113583984" readonly>
+                                    <button class="copy-btn" data-copy="PK06MEZN0010200113583984" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                                <div class="bank-value iban">PK06MEZN0010200113583984</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-globe"></i> SWIFT CODE
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    SWIFT CODE
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input form-input-swift" value="MEZNPKKAGRD" readonly>
+                                    <button class="copy-btn" data-copy="MEZNPKKAGRD" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                                <div class="bank-value swift">MEZNPKKAGRD</div>
                             </div>
                         </div>
                     </div>
@@ -1568,82 +2752,174 @@
                 <div class="tab-content" id="habib-tab">
                     <div class="bank-section">
                         <div class="bank-header">
-                            <div class="bank-logo-circle"
-                                style="background: linear-gradient(135deg, #8b0000, #b22222);">
-                                <i class="fas fa-university"></i>
+                            <div class="bank-logo-circle habib-gradient">
+                                <img src="assets/habib_metro.svg" alt="Habib Metro Bank" class="bank-logo-header">
                             </div>
                             <div class="bank-header-text">
                                 <h2>Habib Metro Ltd.</h2>
                                 <p>HBZ Plaza Branch, I.I Chandrigar Road</p>
                             </div>
+                            <button class="copy-all-btn" data-bank="habib" title="Copy all bank details">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
                         </div>
 
-                        <div class="account-title">
-                            <h3>Account Title</h3>
-                            <p>PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION</p>
+                        <div class="account-title-form">
+                            <label class="form-label">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Account Title
+                            </label>
+                            <div class="form-field-wrapper">
+                                <input type="text" class="form-input" value="PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION" readonly>
+                            </div>
                         </div>
 
-                        <div class="bank-details">
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-building"></i> Bank Name
-                                </div>
-                                <div class="bank-value">HABIB METRO LTD.</div>
-                            </div>
-
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-map-marker-alt"></i> Branch Name
-                                </div>
-                                <div class="bank-value">HBZ PLAZA BRANCH</div>
-                            </div>
-
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-map-pin"></i> Branch Address
-                                </div>
-                                <div class="bank-value">I.I CHANDRIGAR ROAD</div>
-                            </div>
-
-                            <div class="currency-accounts">
-                                <div class="currency-account">
-                                    <div class="currency-label">
-                                        <i class="fas fa-rupee-sign"></i> PKR Account No
-                                    </div>
-                                    <div class="currency-value">152,0271–4037–0551</div>
-                                </div>
-
-                                <div class="currency-account">
-                                    <div class="currency-label">
-                                        <i class="fas fa-dollar-sign"></i> US Dollar Account No
-                                    </div>
-                                    <div class="currency-value">0152–2333–3037–0551</div>
+                        <div class="bank-details-form">
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Bank Name
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="HABIB METRO LTD." readonly>
                                 </div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-credit-card"></i> IBAN
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Name
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="HBZ PLAZA BRANCH" readonly>
                                 </div>
-                                <div class="bank-value iban">PK34 MPBL 0152–2333–3037–0551</div>
                             </div>
 
-                            <div class="bank-item">
-                                <div class="bank-label">
-                                    <i class="fas fa-globe"></i> SWIFT CODE
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Branch Address
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="I.I CHANDRIGAR ROAD" readonly>
                                 </div>
-                                <div class="bank-value swift">MPBL PKKA052</div>
+                            </div>
+
+                            <div class="form-field form-field-currency">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 6V18M9 9C9 8.46957 9.21071 7.96086 9.58579 7.58579C9.96086 7.21071 10.4696 7 11 7H13C13.5304 7 14.0391 7.21071 14.4142 7.58579C14.7893 7.96086 15 8.46957 15 9C15 9.53043 14.7893 10.0391 14.4142 10.4142C14.0391 10.7893 13.5304 11 13 11H11C10.4696 11 9.96086 11.2107 9.58579 11.5858C9.21071 11.9609 9 12.4696 9 13C9 13.5304 9.21071 14.0391 9.58579 14.4142C9.96086 14.7893 10.4696 15 11 15H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    PKR Account No
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="152,0271–4037–0551" readonly>
+                                    <button class="copy-btn" data-copy="152,0271–4037–0551" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-field form-field-currency">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 6V18M9 9C9 8.46957 9.21071 7.96086 9.58579 7.58579C9.96086 7.21071 10.4696 7 11 7H13C13.5304 7 14.0391 7.21071 14.4142 7.58579C14.7893 7.96086 15 8.46957 15 9C15 9.53043 14.7893 10.0391 14.4142 10.4142C14.0391 10.7893 13.5304 11 13 11H11C10.4696 11 9.96086 11.2107 9.58579 11.5858C9.21071 11.9609 9 12.4696 9 13C9 13.5304 9.21071 14.0391 9.58579 14.4142C9.96086 14.7893 10.4696 15 11 15H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    US Dollar Account No
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input" value="0152–2333–3037–0551" readonly>
+                                    <button class="copy-btn" data-copy="0152–2333–3037–0551" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="1" y1="10" x2="23" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    IBAN
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input form-input-iban" value="PK34 MPBL 0152–2333–3037–0551" readonly>
+                                    <button class="copy-btn" data-copy="PK34 MPBL 0152–2333–3037–0551" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <label class="form-label">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    SWIFT CODE
+                                </label>
+                                <div class="form-field-wrapper">
+                                    <input type="text" class="form-input form-input-swift" value="MPBL PKKA052" readonly>
+                                    <button class="copy-btn" data-copy="MPBL PKKA052" title="Copy to clipboard">
+                                        <svg class="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M5 15H4C2.89543 15 2 14.1046 2 13V4C2 2.89543 2.89543 2 4 2H13C14.1046 2 15 2.89543 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg class="check-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="instructions">
-                    <p><i class="fas fa-info-circle"></i> <strong>Note:</strong> Use these details for bank transfers
-                        and donations.</p>
-                    <p><i class="fas fa-hand-holding-usd"></i> Please verify the account details before making any
-                        transaction.</p>
-                    <p><i class="fas fa-exchange-alt"></i> Switch between bank accounts using the tabs above.</p>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div>
+                        <p><strong>Note:</strong> Use these details for bank transfers and donations.</p>
+                        <p>Please verify the account details before making any transaction.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1717,25 +2993,10 @@
                                 placeholder="Enter your email" required>
                         </div>
 
-                        <div class="form-row">
-                            <div class="form-group form-group-half">
-                                <label for="phone" class="form-label">Phone Number *</label>
-                                <input type="tel" id="phone" name="phone" class="form-control"
-                                    placeholder="Enter your phone" required>
-                            </div>
-                            <div class="form-group form-group-half">
-                                <label for="country" class="form-label">Country</label>
-                                <select id="country" name="country" class="form-control">
-                                    <option value="PK">Pakistan</option>
-                                    <option value="US">United States</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="AU">Australia</option>
-                                    <option value="AE">United Arab Emirates</option>
-                                    <option value="SA">Saudi Arabia</option>
-                                    <option value="OTHER">Other</option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" class="form-control"
+                                placeholder="Enter your phone" required>
                         </div>
 
                         <div class="form-group">
@@ -2334,6 +3595,13 @@
 
     <!-- jquery Min JS -->
     <script src="js/jquery.min.js"></script>
+    <!-- Mute jQuery Migrate warnings -->
+    <script>
+        if (typeof jQuery !== 'undefined') {
+            jQuery.migrateMute = true;
+            jQuery.migrateTrace = false;
+        }
+    </script>
     <!-- jquery Migrate JS -->
     <script src="js/jquery-migrate-3.0.0.js"></script>
     <!-- jquery Ui JS -->
@@ -2367,7 +3635,7 @@
     <!-- Magnific Popup JS -->
     <script src="js/jquery.magnific-popup.min.js"></script>
     <!-- Counter Up CDN JS -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="js/bootstrap.min.js"></script>
     <!-- Main JS -->
@@ -2431,21 +3699,163 @@
             });
         });
 
-        // Payment Form Modal Functionality
+        // Copy to clipboard functionality
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const textToCopy = this.getAttribute('data-copy');
+                const copyIcon = this.querySelector('.copy-icon');
+                const checkIcon = this.querySelector('.check-icon');
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Show success state
+                    this.classList.add('copied');
+                    
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        this.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        this.classList.add('copied');
+                        setTimeout(() => {
+                            this.classList.remove('copied');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy:', err);
+                    }
+                    document.body.removeChild(textArea);
+                });
+            });
+        });
+
+        // Share and Copy functionality
+        function getBankDetails(bankType) {
+            let shareText = '';
+            if (bankType === 'meezan') {
+                shareText = `Meezan Bank Limited - Bank Account Details\n\n` +
+                    `Account Title: PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION\n` +
+                    `Bank Name: MEEZAN BANK LIMITED\n` +
+                    `Account No: 1020-0113583984\n` +
+                    `IBAN: PK06MEZN0010200113583984\n` +
+                    `SWIFT CODE: MEZNPKKAGRD`;
+            } else if (bankType === 'habib') {
+                shareText = `Habib Metro Ltd. - Bank Account Details\n\n` +
+                    `Account Title: PAKISTAN MEDICO INTERNATIONAL SOCIAL WELFARE ASSOCIATION\n` +
+                    `Bank Name: HABIB METRO LTD.\n` +
+                    `US Dollar Account No: 0152–2333–3037–0551\n` +
+                    `IBAN: PK34 MPBL 0152–2333–3037–0551\n` +
+                    `SWIFT CODE: MPBL PKKA052`;
+            }
+            return shareText;
+        }
+
+        // Copy all button functionality
+        document.querySelectorAll('.copy-all-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const bankType = this.getAttribute('data-bank');
+                const shareText = getBankDetails(bankType);
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showCopyNotification('Bank details copied to clipboard!');
+                }).catch(err => {
+                    showCopyNotification('Bank details copied to clipboard!');
+                });
+            });
+        });
+
+        function showCopyNotification(message = 'Bank details copied to clipboard!') {
+            // Show temporary notification
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4caf50;
+                color: white;
+                padding: 16px 24px;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-weight: 600;
+                animation: slideIn 0.3s ease;
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add CSS animations for notification
+        if (!document.getElementById('share-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'share-notification-styles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(400px);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOut {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(400px);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Payment Form Modal Functionality - Use Checkout Handler
         const donateOnlineBtn = document.getElementById('donateOnlineBtn');
+
+        // Open checkout modal when "DONATE ONLINE" is clicked (same as header button)
+        if (donateOnlineBtn) {
+            donateOnlineBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Use checkout handler if available, otherwise open modal directly
+                if (window.checkoutHandler) {
+                    window.checkoutHandler.openModal();
+                } else {
+                    // Fallback: direct modal opening
+                    const modal = document.getElementById('checkoutModalOverlay');
+                    if (modal) {
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                }
+            });
+        }
+
+        // Keep old payment modal references for backwards compatibility (if needed elsewhere)
         const paymentModalOverlay = document.getElementById('paymentModalOverlay');
         const closePaymentModalBtn = document.getElementById('closePaymentModal');
         const cancelPaymentBtn = document.getElementById('cancelPayment');
         const paymentForm = document.getElementById('paymentForm');
-
-        // Open payment modal when "DONATE ONLINE" is clicked
-        if (donateOnlineBtn) {
-            donateOnlineBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                paymentModalOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        }
 
         // Close payment modal when X button is clicked
         if (closePaymentModalBtn) {
@@ -2522,6 +3932,92 @@
                 paymentForm.reset();
             });
         }
+
+        // Sticky Header with Glassmorphism Effect
+        document.addEventListener('DOMContentLoaded', function () {
+            const header = document.querySelector('.header');
+            const headerInner = document.querySelector('.header-inner');
+            let lastScroll = 0;
+
+            function handleScroll() {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (currentScroll > 100) {
+                    header.classList.add('sticky');
+                    if (headerInner) {
+                        headerInner.classList.add('sticky');
+                    }
+                } else {
+                    header.classList.remove('sticky');
+                    if (headerInner) {
+                        headerInner.classList.remove('sticky');
+                    }
+                }
+
+                lastScroll = currentScroll;
+            }
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            handleScroll(); // Check on load
+        });
+
+        // Animation for schedule cards on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const scheduleCards = document.querySelectorAll('.single-schedule');
+            
+            // Add animate-in class to schedule cards with staggered delay
+            scheduleCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('animate-in');
+                }, 200 + (index * 150));
+            });
+        });
+
+        // Scroll-triggered animation for donation cards with enter/exit animations
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.donation-card');
+            let animationTimeouts = {};
+
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5],
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach((entry, index) => {
+                    const card = entry.target;
+                    const cardId = Array.from(cards).indexOf(card);
+
+                    // Clear any pending animation for this card
+                    if (animationTimeouts[cardId]) {
+                        clearTimeout(animationTimeouts[cardId]);
+                        delete animationTimeouts[cardId];
+                    }
+
+                    if (entry.isIntersecting) {
+                        // Card is entering viewport - animate in
+                        card.classList.remove('animate-out');
+                        animationTimeouts[cardId] = setTimeout(() => {
+                            card.classList.add('animate-in');
+                            delete animationTimeouts[cardId];
+                        }, cardId * 50); // 50ms delay between each card
+                    } else {
+                        // Card is leaving viewport - animate out
+                        card.classList.remove('animate-in');
+                        animationTimeouts[cardId] = setTimeout(() => {
+                            card.classList.add('animate-out');
+                            delete animationTimeouts[cardId];
+                        }, 100);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all donation cards
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
     </script>
 
 </body>

@@ -3595,6 +3595,13 @@
 
     <!-- jquery Min JS -->
     <script src="js/jquery.min.js"></script>
+    <!-- Mute jQuery Migrate warnings -->
+    <script>
+        if (typeof jQuery !== 'undefined') {
+            jQuery.migrateMute = true;
+            jQuery.migrateTrace = false;
+        }
+    </script>
     <!-- jquery Migrate JS -->
     <script src="js/jquery-migrate-3.0.0.js"></script>
     <!-- jquery Ui JS -->

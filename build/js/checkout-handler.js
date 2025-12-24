@@ -95,6 +95,15 @@ class CheckoutHandler {
             });
         }
 
+        // Open modal when "Donate Online" button is clicked (from donation cards)
+        const donateOnlineBtn = document.getElementById('donateOnlineBtn');
+        if (donateOnlineBtn) {
+            donateOnlineBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openModal();
+            });
+        }
+
         // Close modal handlers
         const closeModalBtn = document.getElementById('checkoutCloseBtn');
         if (closeModalBtn) {
@@ -154,18 +163,103 @@ class CheckoutHandler {
         // Handle custom amount input
         const customAmount = document.getElementById('customAmount');
         if (customAmount) {
+            const MAX_AMOUNT = 100000000000000; // 100,000B maximum
+
+            // Prevent exceeding max amount while typing
             customAmount.addEventListener('input', (e) => {
-                const amount = parseFloat(e.target.value);
+                let value = e.target.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+                
+                // Check if value exceeds maximum
+                if (value && parseFloat(value) > MAX_AMOUNT) {
+                    value = MAX_AMOUNT.toString();
+                    e.target.value = value;
+                } else {
+                    e.target.value = value;
+                }
+
+                // Remove validation errors while typing
+                e.target.classList.remove('error');
+                const existingError = e.target.parentElement.querySelector('.field-error');
+                if (existingError) {
+                    existingError.remove();
+                }
+
+                // Update amount display if valid
+                const amount = parseFloat(value);
                 if (amount && amount > 0) {
                     // Remove active class from all buttons
                     amountButtons.forEach(b => b.classList.remove('active'));
-                    // Set custom amount
+                    // Set custom amount (will be capped by formatAmount if needed)
                     this.setAmount(amount);
                 } else {
                     this.setAmount(0);
                 }
             });
+
+            // Only validate on blur (not while typing)
+            customAmount.addEventListener('blur', (e) => {
+                const amount = parseFloat(e.target.value);
+                if (!e.target.value || amount <= 0) {
+                    this.validateField(customAmount);
+                } else if (amount > MAX_AMOUNT) {
+                    customAmount.value = MAX_AMOUNT;
+                    this.setAmount(MAX_AMOUNT);
+                }
+            });
         }
+    }
+
+    /**
+     * Format amount with k/m notation for large numbers
+     * @param {number} amount - Amount to format
+     * @returns {string} Formatted amount string
+     */
+    formatAmount(amount) {
+        if (!amount || amount === 0) {
+            return 'Select Amount';
+        }
+
+        const num = parseFloat(amount);
+        if (isNaN(num) || !isFinite(num)) {
+            return 'Select Amount';
+        }
+
+        // Limit maximum to 100,000B (100,000,000,000,000)
+        const maxAmount = 100000000000000;
+        const cappedNum = num > maxAmount ? maxAmount : num;
+
+        // Count digits
+        const numStr = Math.floor(cappedNum).toString();
+        const digitCount = numStr.length;
+
+        // Format with k/m/b notation for numbers exceeding 6 digits (1,000,000+)
+        if (digitCount > 6) {
+            if (cappedNum >= 1000000000) {
+                // Billions (10+ digits)
+                const billions = cappedNum / 1000000000;
+                const formatted = billions % 1 === 0 
+                    ? Math.floor(billions).toLocaleString() 
+                    : billions.toLocaleString('en-US', { maximumFractionDigits: 2, minimumFractionDigits: 0 });
+                return `PKR ${formatted}B`;
+            } else if (cappedNum >= 1000000) {
+                // Millions (7-9 digits)
+                const millions = cappedNum / 1000000;
+                const formatted = millions % 1 === 0 
+                    ? Math.floor(millions).toLocaleString() 
+                    : millions.toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 0 });
+                return `PKR ${formatted}M`;
+            } else if (cappedNum >= 100000) {
+                // 100,000 - 999,999 (6 digits) - use K for readability
+                const thousands = cappedNum / 1000;
+                const formatted = thousands % 1 === 0 
+                    ? Math.floor(thousands).toLocaleString() 
+                    : Math.floor(thousands).toLocaleString();
+                return `PKR ${formatted}K`;
+            }
+        }
+
+        // Regular format with commas for numbers with 6 digits or less
+        return `PKR ${Math.floor(cappedNum).toLocaleString()}`;
     }
 
     /**
@@ -179,7 +273,18 @@ class CheckoutHandler {
         }
         const amountDisplay = document.getElementById('donationAmountDisplay');
         if (amountDisplay) {
-            amountDisplay.textContent = `PKR ${amount.toLocaleString()}`;
+            const formatted = this.formatAmount(amount);
+            amountDisplay.textContent = formatted;
+            
+            // Set data attribute for responsive font sizing
+            const textLength = formatted.length;
+            if (textLength <= 15) {
+                amountDisplay.setAttribute('data-length', 'short');
+            } else if (textLength <= 25) {
+                amountDisplay.setAttribute('data-length', 'medium');
+            } else {
+                amountDisplay.setAttribute('data-length', 'long');
+            }
         }
     }
 
@@ -351,9 +456,21 @@ class CheckoutHandler {
             const amountDisplay = document.getElementById('donationAmountDisplay');
             if (amountDisplay) {
                 if (amount > 0) {
-                    amountDisplay.textContent = `PKR ${parseFloat(amount).toLocaleString()}`;
+                    const formatted = this.formatAmount(amount);
+                    amountDisplay.textContent = formatted;
+                    
+                    // Set data attribute for responsive font sizing
+                    const textLength = formatted.length;
+                    if (textLength <= 15) {
+                        amountDisplay.setAttribute('data-length', 'short');
+                    } else if (textLength <= 25) {
+                        amountDisplay.setAttribute('data-length', 'medium');
+                    } else {
+                        amountDisplay.setAttribute('data-length', 'long');
+                    }
                 } else {
                     amountDisplay.textContent = 'Select Amount';
+                    amountDisplay.removeAttribute('data-length');
                 }
             }
 
@@ -494,7 +611,6 @@ class CheckoutHandler {
             fullName: document.getElementById('fullName')?.value.trim() || '',
             email: document.getElementById('email')?.value.trim() || '',
             phone: document.getElementById('phone')?.value.trim() || '',
-            country: document.getElementById('country')?.value || 'PK',
             address: document.getElementById('address')?.value.trim() || ''
         };
     }

@@ -325,8 +325,38 @@ Version:	1.1
 	/*====================
 		Preloader JS
 	======================*/
-	$(window).on('load', function() {
+	// Multiple fallbacks to ensure preloader is removed
+	function removePreloader() {
 		$('.preloader').addClass('preloader-deactivate');
+		// Also remove from DOM after animation completes
+		setTimeout(function() {
+			$('.preloader').remove();
+		}, 1000);
+	}
+	
+	// Method 1: Window load event
+	$(window).on('load', function() {
+		removePreloader();
+	});
+	
+	// Method 2: Check if page is already loaded
+	if (document.readyState === 'complete') {
+		removePreloader();
+	} else {
+		// Method 3: Fallback timeout (remove after 3 seconds max)
+		setTimeout(function() {
+			if ($('.preloader').length && !$('.preloader').hasClass('preloader-deactivate')) {
+				removePreloader();
+			}
+		}, 3000);
+	}
+	
+	// Method 4: DOMContentLoaded fallback
+	$(document).ready(function() {
+		// If images are already loaded, remove preloader
+		if (document.readyState === 'complete') {
+			removePreloader();
+		}
 	});
 	
 	

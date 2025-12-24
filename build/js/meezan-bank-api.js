@@ -69,13 +69,13 @@ class MeezanBankAPI {
             ...config
         };
 
-        // Debug: Log the calculated URLs
-        console.log('🔍 Meezan Bank API Configuration:');
-        console.log('  - Base Path:', basePath);
-        console.log('  - Return URL:', this.config.returnUrl);
-        console.log('  - Fail URL:', this.config.failUrl);
-        console.log('  - Current Pathname:', window.location.pathname);
-        console.log('  - Current Origin:', window.location.origin);
+        // Debug: Log the calculated URLs (removed for production)
+        // console.log('🔍 Meezan Bank API Configuration:');
+        // console.log('  - Base Path:', basePath || '(root domain)');
+        // console.log('  - Return URL:', this.config.returnUrl);
+        // console.log('  - Fail URL:', this.config.failUrl);
+        // console.log('  - Current Pathname:', window.location.pathname);
+        // console.log('  - Current Origin:', window.location.origin);
 
         this.init();
     }
@@ -85,7 +85,7 @@ class MeezanBankAPI {
      */
     init() {
         this.validateConfig();
-        console.log('Meezan Bank EPG API initialized');
+        // console.log('Meezan Bank EPG API initialized');
     }
 
     /**
@@ -138,11 +138,11 @@ class MeezanBankAPI {
                 failUrl: this.config.failUrl
             };
 
-            // Debug: Log the currency and URLs being sent
-            console.log('🔍 API Request - Currency Code:', currencyCode);
-            console.log('🔍 API Request - Return URL:', this.config.returnUrl);
-            console.log('🔍 API Request - Fail URL:', this.config.failUrl);
-            console.log('🔍 API Request - Full Payload:', requestData);
+            // Debug: Log the currency and URLs being sent (removed for production)
+            // console.log('🔍 API Request - Currency Code:', currencyCode);
+            // console.log('🔍 API Request - Return URL:', this.config.returnUrl);
+            // console.log('🔍 API Request - Fail URL:', this.config.failUrl);
+            // console.log('🔍 API Request - Full Payload:', requestData);
 
             // Optional parameters
             if (paymentData.description) {

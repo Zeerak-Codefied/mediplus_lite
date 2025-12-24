@@ -428,6 +428,9 @@ Preloader Area CSS
 
 .preloader.preloader-deactivate {
 	visibility: hidden;
+	opacity: 0;
+	pointer-events: none;
+	z-index: -1;
 }
 
 .preloader.preloader-deactivate::after,
